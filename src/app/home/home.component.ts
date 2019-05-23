@@ -9,6 +9,7 @@ import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag
 export class HomeComponent implements OnInit {
 
   weeks = [];
+  weeksBackup = [];
   connectedTo = [];
   
   constructor(){
@@ -54,6 +55,8 @@ export class HomeComponent implements OnInit {
     for (let week of this.weeks) {
       this.connectedTo.push(week.id);
     };
+
+    this.weeksBackup = JSON.parse(JSON.stringify(this.weeks));
   }
 
   ngOnInit() {
@@ -63,11 +66,36 @@ export class HomeComponent implements OnInit {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
-      transferArrayItem(event.previousContainer.data,
-                        event.container.data,
-                        event.previousIndex,
-                        event.currentIndex);
+      transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
+      this.weeks.forEach((week, index) => {
+        if(!this.arraysEquality(week.weeklist, this.weeksBackup[index].weeklist)) {
+          console.log('not equal')
+        }
+      })
+
     }
+  }
+
+  arraysEquality(array1, array2) {
+    // if the other array is a falsy value, return
+    if (!array1 || !array2) return false;
+  
+    // compare lengths - can save a lot of time 
+    if (array1.length != array2.length) return false;
+  
+    for (let i = 0; i < array1.length; i++) {
+      // Check if we have nested arrays
+      if (array1[i] instanceof Array && array2[i] instanceof Array) {
+        // recurse into the nested arrays
+        if (!array1[i].equals(array2[i]))
+          return false;       
+      }           
+      else if (array1[i] != array2[i]) { 
+        // Warning - two different object instances will never be equal: {x:20} != {x:20}
+        return false;   
+      }           
+    }       
+    return true;
   }
 
 }
