@@ -21,6 +21,24 @@
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
       <span>Time Management</span>
+
+      <div class="user" *ngIf="user">
+        <img class="user-pic"
+          [src]="user.photoURL"
+          [alt]="user.displayName"
+          [title]="user.displayName"
+        />
+        <h2 class="user-name" mat-button [matMenuTriggerFor]="menu">
+          {{user.displayName}}
+          <i class="icon-circle-down"></i>
+        </h2>
+
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item>Profile</button>
+          <button mat-menu-item>Log Out</button>
+        </mat-menu>
+        
+      </div>
     </mat-toolbar>
 
     <!-- Add Content Here -->
@@ -28,3 +46,15 @@
 
   </mat-sidenav-content>
 </mat-sidenav-container>
+
+
+<!-- mail verfication 
+<div class="not-verfied" *ngIf="">
+
+  <i class="icon-info"></i>
+
+  <div class="message">
+    Please Verify Your Email
+  </div>
+
+</div> -->

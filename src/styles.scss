@@ -30,3 +30,289 @@ $timemanagement-theme: mat-light-theme($timemanagement-primary, $timemanagement-
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@import '~@angular/material/theming';
+// Plus imports for other components in your app.
+
+@import './assets/css/variables.scss';
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat-core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$fouadOsama-primary: mat-palette($mat-indigo);
+$fouadOsama-accent: mat-palette($mat-pink, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$fouadOsama-warn: mat-palette($mat-red);
+
+// Create the theme object (a Sass map containing all of the palettes).
+$fouadOsama-theme: mat-light-theme($fouadOsama-primary, $fouadOsama-accent, $fouadOsama-warn);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include angular-material-theme($fouadOsama-theme);
+
+/* You can add global styles to this file, and also import other style files */
+
+* {
+  box-sizing: border-box;
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, sans-serif !important; }
+
+//general styles
+.container {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+@media (min-width: 576px) {
+  .container {
+    max-width: 540px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 720px;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    max-width: 960px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1140px;
+  }
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.item-center {
+  justify-content: center;
+}
+
+//margins && paddings
+//margin
+.m-1 {margin: 5px !important;}
+.m-2 {margin: 10px !important;}
+.m-3 {margin: 15px !important;}
+.m-4 {margin: 20px !important;}
+.m-5 {margin: 25px !important;}
+
+//margin-top
+.mt-1 {margin-top: 5px !important;}
+.mt-2 {margin-top: 10px !important;}
+.mt-3 {margin-top: 15px !important;}
+.mt-4 {margin-top: 20px !important;}
+.mt-5 {margin-top: 25px !important;}
+
+//padding
+.p-1 {padding: 5px !important;}
+.p-2 {padding: 10px !important;}
+.p-3 {padding: 15px !important;}
+.p-4 {padding: 20px !important;}
+.p-5 {padding: 25px !important;}
+
+//padding-top
+.pt-1 {padding-top: 5px !important;}
+.pt-2 {padding-top: 10px !important;}
+.pt-3 {padding-top: 15px !important;}
+.pt-4 {padding-top: 20px !important;}
+.pt-5 {padding-top: 25px !important;}
+
+//text classes
+.text-center {
+  text-align: center;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+mat-form-field {
+    width: 100%;
+}
+
+//main app table styling
+.table-holder {
+  @media(max-width: 992px) {
+    overflow: auto;
+  }
+}
+
+.app-table {
+  width: 100%;
+  margin-bottom: 1rem;
+  background-color: transparent;
+  box-shadow: 1px 1px 2px 2px #b7b7b7;
+
+  .total-row {
+    background-color: #DDD;
+  }
+
+  th, td {
+    padding: 0.75rem;
+    border-top: 1px solid #dee2e6;
+  }
+
+  th {
+    vertical-align: bottom;
+  }
+}
+
+.custom-file-upload {
+  border: 1px solid #ccc;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    background-color: $primary;
+    color: #FFF;
+  }
+}
+#ImgInput {
+  display: none;
+}
+
+.app-heading {
+  border: 1px solid $primary;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.app-button  {
+  outline: none;
+  border: none;
+  background: $primary;
+  color: #FFF;
+  font-size: 1.2rem;
+  height: 40px;
+  width: 150px;
+  margin-top: 55px;
+  border-radius: 50px;
+  position: relative;
+  animation: breathing 3s linear infinite;
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+    background: rgba(144, 164, 174, 0.6);
+  }
+}
+
+*::-webkit-scrollbar {
+  width: 3px;
+}
+
+*::-webkit-scrollbar-track {
+  background-color: #DDD;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #aaa;
+}
+
+.list-item .mat-list-item-content {
+  justify-content: center !important;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+
+.card {
+  width: 320px;
+  position: relative;
+  overflow: hidden;
+  margin: 15px;
+
+  &:hover {
+    .card-content {
+      top: 0;
+    }
+  }
+
+  .icon-list-menu {
+    background: none;
+    border: none;
+    outline: none;
+    position: absolute;
+    top: 10px;
+    right: 5px;
+    z-index: 2;
+
+    &:hover {
+      cursor: pointer;
+      color: #777;
+      outline: none;
+    }
+  }
+
+  .card-content {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.75);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    transition: all 0.4s ease-in-out;
+    z-index: 1;
+  }
+}
+
+//animations
+@keyframes breathing {
+  0% {
+    box-shadow: 0 0 0 0 rgba(144, 164, 174, 0.7), 0 0 0 0 rgba(144, 164, 174, 0.7);
+  }
+
+  40% {
+    box-shadow: 0 0 0 50px rgba(144, 164, 174, 0), 0 0 0 0 rgba(144, 164, 174, 0.7);
+  }
+
+  80% {
+    box-shadow: 0 0 0 50px rgba(144, 164, 174, 0), 0 0 0 30px rgba(144, 164, 174, 0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(144, 164, 174, 0), 0 0 0 30px rgba(144, 164, 174, 0);
+  }
+}
+
+.loader {
+  width: 60px;
+  height: 60px;
+}
+
+.mat-card-header-text {
+  margin: 0 !important;
+}

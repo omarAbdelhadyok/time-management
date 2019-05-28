@@ -1,0 +1,89 @@
+<div class="container">
+  <h2 class="app-heading" style="display: inline-block">Register</h2>
+
+  <div class="row">
+    <form #registerForm="ngForm" class="w-100">
+      <mat-form-field class="mt-2">
+        <input matInput
+          placeholder="Full Name"
+          type="text"
+          name="fullname"
+          required
+          [(ngModel)]="user.displayName"
+          #fullName="ngModel"
+        />
+    
+        <mat-error *ngIf="fullName.invalid">
+          Name is required
+        </mat-error>
+      </mat-form-field>
+  
+      <mat-form-field class="mt-2">
+        <input matInput
+          placeholder="E-mail"
+          type="email"
+          required
+          name="user"
+          [(ngModel)]="user.email"
+          #userEmail="ngModel"
+        />
+    
+        <mat-error *ngIf="userEmail.invalid">
+          E-mail is required
+        </mat-error>
+      </mat-form-field>
+    
+      <mat-form-field class="mt-2">
+        <input matInput
+          placeholder="Password"
+          [type]="hide ? 'password' : 'text'"
+          required
+          name="pass"
+          [(ngModel)]="user.password"
+          #userPassword="ngModel"
+        />
+        <mat-icon matSuffix
+          (click)="hide = !hide">
+          {{hide ? 'visibility_off' : 'visibility'}}
+        </mat-icon>
+    
+        <mat-error *ngIf="userPassword.invalid">
+          Password is required
+        </mat-error>
+      </mat-form-field>
+  
+      <div class="mt-2">
+        <div>
+          <label class="custom-file-upload"
+            for="ImgInput">
+            Profile Picture
+          </label>
+          <input type="file"
+            name="postImg"
+            id="ImgInput"
+            (change)="onPostImageUpload($event)"
+          />
+        </div>
+        
+        <div class="img-display-box" *ngIf="displayImg">
+          <img [src]="displayImg" alt="Post Image">
+        </div>
+      </div>
+    
+      <div class="w-100 text-center mt-3">
+        <button mat-raised-button
+          color="primary"
+          [disabled]="registerForm.invalid || busylogging"
+          (click)="register()">
+          
+          <img class="loader"
+            src="./../../../assets/images/loader.svg"
+            *ngIf="busylogging"
+          />
+          
+          Register
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

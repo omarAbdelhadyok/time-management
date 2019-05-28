@@ -1,0 +1,128 @@
+<section class="row mt-5">
+  <div class="active-tasks">
+
+    <mat-card class="task-card">
+      <mat-card-header>
+        <mat-card-title>Active Tasks</mat-card-title>
+        <mat-card-subtitle>Dog Breed</mat-card-subtitle>
+      </mat-card-header>
+       
+      <!--<img mat-card-image
+        class="card-header"
+        src="./../../../assets/images/active-tasks-header.svg"
+        alt="Active Tasks"
+        title="Active Tasks"
+      /> -->
+
+      <mat-card-content>
+
+        <form class="add-task" #addTaskFrom="ngForm">
+          <mat-form-field class="mt-2">
+            <mat-select placeholder="Select Project"
+              name="project"
+              #project="ngModel"
+              ngModel
+              required
+              (selectionChange)="selectProject($event)">
+              
+              <mat-option disabled *ngIf="projects.length == 0 && noData == false">
+                Loading projects please wait ...
+              </mat-option>
+
+              <mat-option disabled *ngIf="projects.length == 0 && noData == true">
+                No projects yet, please add some
+              </mat-option>
+
+              <mat-option *ngFor="let project of projects; index as i" [value]="i">
+                {{project.title}}
+              </mat-option>
+
+            </mat-select>
+
+            <mat-error *ngIf="project.touched && project.errors?.required">
+              Project is required
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="mt-2">
+            <mat-select placeholder="Select Task"
+              (selectionChange)="selectTask($event)"
+              name="task"
+              #task="ngModel"
+              ngModel
+              required>
+  
+              <mat-option disabled *ngIf="!selectedProjInd && selectedProjInd != 0">
+                Please select a project first
+              </mat-option>
+
+              <mat-option *ngFor="let task of projects[selectedProjInd]?.tasks; index as o" 
+                [value]="o" [disabled]="task.current">
+                  {{task.task}}
+              </mat-option>
+  
+            </mat-select>
+
+            <mat-error *ngIf="task.touched && task.errors?.required">
+              Task is required
+            </mat-error>
+          </mat-form-field>
+
+          <div class="add-task-btn">
+            <button mat-flat-button
+              [disabled]="addTaskFrom.invalid"
+              (click)="addTask()">
+              ADD
+            </button>
+          </div>
+        </form>
+
+        <mat-divider></mat-divider>
+
+        <mat-list *ngIf="currentTasks.length != 0">
+          
+          <mat-list-item  class="current-task" *ngFor="let task of currentTasks; index as cI"
+            [ngClass]="{'done': task.done}">
+            <span>
+              <i class="icon-bin" (click)="deleteCurrentFromTasks(cI)"></i>
+              <mat-checkbox class="custom-check"
+                color="accent"
+                labelPosition="before"
+                (change)="selectTaskFromCurrentTasks(cI)">
+                {{task.task}}
+              </mat-checkbox>
+            </span>
+          </mat-list-item>
+
+        </mat-list>
+
+        <div class="text-center" *ngIf="currentTasks.length == 0 && noTasksData == false">
+          <img src="./../../../assets/images/loader.svg"
+            class="loader"
+            alt="Loading ..."
+            title="Loading ..."
+          />
+        </div>
+
+        <div class="text-center" *ngIf="currentTasks.length == 0 && noTasksData == true">
+          <p>{{displayedTasksMsg}}</p>
+        </div>
+
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-flat-button class="m-1" color="primary">
+          Save
+        </button>
+        <button mat-flat-button class="m-1" color="warn">
+          Cancel
+        </button>
+      </mat-card-actions>
+    </mat-card>    
+    
+  </div>
+
+  <div class="projects">
+
+  </div>
+  
+</section>

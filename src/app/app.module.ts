@@ -4,29 +4,48 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { DragDropModule } from '@angular/cdk/drag-drop'
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+import { AngularFireAuthModule } from "@angular/fire/auth";
+import { environment } from 'src/environments/environment';
 import { MainNavComponent } from './main-nav/main-nav.component';
-import { LayoutModule } from '@angular/cdk/layout';
-import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule } from '@angular/material';
-import { HomeComponent } from './home/home.component';
+import { HomeComponent } from './general/home/home.component';
+import { MaterialImportsModule } from './shared/modules/material-imports.module';
+import { LoginComponent } from './general/login/login.component';
+import { NotFoundComponent } from './general/not-found/not-found.component';
+import { FormsModule } from '@angular/forms';
+import { RegisterComponent } from './general/register/register.component';
+import { ToastrModule } from 'ngx-toastr';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
     AppComponent,
     MainNavComponent,
-    HomeComponent
+    HomeComponent,
+    LoginComponent,
+    NotFoundComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    DragDropModule,
-    LayoutModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatSidenavModule,
-    MatIconModule,
-    MatListModule
+    MaterialImportsModule,
+    FormsModule,
+    AngularFireModule.initializeApp(environment.firebase, 'my-app-name'),
+    AngularFirestoreModule,
+    AngularFireStorageModule,
+    AngularFireAuthModule,
+    HttpClientModule,
+    ToastrModule.forRoot({
+      positionClass: 'toast-bottom-right',
+      preventDuplicates: false,
+      newestOnTop: false,
+      progressBar: false,
+      closeButton: false
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]

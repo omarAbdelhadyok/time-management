@@ -1,0 +1,49 @@
+@import './../../../assets/css/variables.scss';
+
+.active-tasks {
+    width: 30%;
+
+    .task-card {
+        .add-task {
+            margin-bottom: 10px;
+
+            .add-task-btn {
+                margin-top: 10px;
+                display: flex;
+                justify-content: flex-end;
+            }
+        }
+
+        .current-task {
+            position: relative;
+
+            &:hover {
+                .icon-bin {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+            }
+
+            .icon-bin {
+                display: inline-block;
+                color: $warn;
+                opacity: 0;
+                transform: translateX(5px);
+                transition: all 0.3s ease-in-out;
+            
+                &:hover {
+                    cursor: pointer;
+                    color: #333;
+                }
+            }
+
+            .custom-check {
+                margin-left: 10px;
+            }
+        }   
+    }
+}
+
+.selected {
+    color: red !important;
+}

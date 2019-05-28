@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg id="master-artboard" viewBox="0 0 525.6425170898438 537.2413940429688" version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" style="enable-background:new 0 0 1400 980;" width="525.6425170898438px" height="537.2413940429688px"><rect id="ee-background" x="0" y="0" width="525.6425170898438" height="537.2413940429688" style="fill: white; fill-opacity: 0; pointer-events: none;"/><defs><style id="ee-google-fonts">@import url(https://fonts.googleapis.com/css?family=Roboto:100,100italic,300,300italic,400,400italic,500,500italic,700,700italic,900,900italic);</style></defs>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<g transform="matrix(9.800000190734863, 0, 0, 9.800000190734863, -226.55177307128906, -221.37930297851562)"><g transform="rotate(0 50 50)">
+  <path d="M 50 24 H 50 A 3 4.8 0 0 1 53 28.8 V 31.2 A 3 4.8 0 0 1 50 36 H 50 A 3 4.8 0 0 1 47 31.2 V 28.8 A 3 4.8 0 0 1 50 24 Z" fill="#90a4ae">
+    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.9166666666666666s" repeatCount="indefinite"/>
+  </path>
+</g><g transform="rotate(30 50 50)">
+  <path d="M 50 24 H 50 A 3 4.8 0 0 1 53 28.8 V 31.2 A 3 4.8 0 0 1 50 36 H 50 A 3 4.8 0 0 1 47 31.2 V 28.8 A 3 4.8 0 0 1 50 24 Z" fill="#90a4ae">
+    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.8333333333333334s" repeatCount="indefinite"/>
+  </path>
+</g><g transform="rotate(60 50 50)">
+  <path d="M 50 24 H 50 A 3 4.8 0 0 1 53 28.8 V 31.2 A 3 4.8 0 0 1 50 36 H 50 A 3 4.8 0 0 1 47 31.2 V 28.8 A 3 4.8 0 0 1 50 24 Z" fill="#90a4ae">
+    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.75s" repeatCount="indefinite"/>
+  </path>
+</g><g transform="rotate(90 50 50)">
+  <path d="M 50 24 H 50 A 3 4.8 0 0 1 53 28.8 V 31.2 A 3 4.8 0 0 1 50 36 H 50 A 3 4.8 0 0 1 47 31.2 V 28.8 A 3 4.8 0 0 1 50 24 Z" fill="#90a4ae">
+    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.6666666666666666s" repeatCount="indefinite"/>
+  </path>
+</g><g transform="rotate(120 50 50)">
+  <path d="M 50 24 H 50 A 3 4.8 0 0 1 53 28.8 V 31.2 A 3 4.8 0 0 1 50 36 H 50 A 3 4.8 0 0 1 47 31.2 V 28.8 A 3 4.8 0 0 1 50 24 Z" fill="#90a4ae">
+    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.5833333333333334s" repeatCount="indefinite"/>
+  </path>
+</g><g transform="rotate(150 50 50)">
+  <path d="M 50 24 H 50 A 3 4.8 0 0 1 53 28.8 V 31.2 A 3 4.8 0 0 1 50 36 H 50 A 3 4.8 0 0 1 47 31.2 V 28.8 A 3 4.8 0 0 1 50 24 Z" fill="#90a4ae">
+    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.5s" repeatCount="indefinite"/>
+  </path>
+</g><g transform="rotate(180 50 50)">
+  <path d="M 50 24 H 50 A 3 4.8 0 0 1 53 28.8 V 31.2 A 3 4.8 0 0 1 50 36 H 50 A 3 4.8 0 0 1 47 31.2 V 28.8 A 3 4.8 0 0 1 50 24 Z" fill="#90a4ae">
+    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.4166666666666667s" repeatCount="indefinite"/>
+  </path>
+</g><g transform="rotate(210 50 50)">
+  <path d="M 50 24 H 50 A 3 4.8 0 0 1 53 28.8 V 31.2 A 3 4.8 0 0 1 50 36 H 50 A 3 4.8 0 0 1 47 31.2 V 28.8 A 3 4.8 0 0 1 50 24 Z" fill="#90a4ae">
+    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.3333333333333333s" repeatCount="indefinite"/>
+  </path>
+</g><g transform="rotate(240 50 50)">
+  <path d="M 50 24 H 50 A 3 4.8 0 0 1 53 28.8 V 31.2 A 3 4.8 0 0 1 50 36 H 50 A 3 4.8 0 0 1 47 31.2 V 28.8 A 3 4.8 0 0 1 50 24 Z" fill="#90a4ae">
+    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.25s" repeatCount="indefinite"/>
+  </path>
+</g><g transform="rotate(270 50 50)">
+  <path d="M 50 24 H 50 A 3 4.8 0 0 1 53 28.8 V 31.2 A 3 4.8 0 0 1 50 36 H 50 A 3 4.8 0 0 1 47 31.2 V 28.8 A 3 4.8 0 0 1 50 24 Z" fill="#90a4ae">
+    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.16666666666666666s" repeatCount="indefinite"/>
+  </path>
+</g><g transform="rotate(300 50 50)">
+  <path d="M 50 24 H 50 A 3 4.8 0 0 1 53 28.8 V 31.2 A 3 4.8 0 0 1 50 36 H 50 A 3 4.8 0 0 1 47 31.2 V 28.8 A 3 4.8 0 0 1 50 24 Z" fill="#90a4ae">
+    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.08333333333333333s" repeatCount="indefinite"/>
+  </path>
+</g><g transform="rotate(330 50 50)">
+  <path d="M 50 24 H 50 A 3 4.8 0 0 1 53 28.8 V 31.2 A 3 4.8 0 0 1 50 36 H 50 A 3 4.8 0 0 1 47 31.2 V 28.8 A 3 4.8 0 0 1 50 24 Z" fill="#90a4ae">
+    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="0s" repeatCount="indefinite"/>
+  </path>
+</g></g></svg>
