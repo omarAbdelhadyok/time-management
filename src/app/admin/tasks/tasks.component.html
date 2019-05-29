@@ -84,7 +84,11 @@
           <mat-list-item  class="current-task" *ngFor="let task of currentTasks; index as cI"
             [ngClass]="{'done': task.done}">
             <span>
-              <i class="icon-bin" (click)="deleteCurrentFromTasks(cI)"></i>
+              <!--(click)="deleteCurrentFromTasks(cI)"-->
+              <i class="icon-bin" [swal]="ConfirmDelete"
+                (confirm)="delete(cI)"
+                (cancel)="handleRefusalToSetEmail($event)">
+              </i>
               <mat-checkbox class="custom-check"
                 color="accent"
                 labelPosition="before"
@@ -96,7 +100,7 @@
 
         </mat-list>
 
-        <div class="text-center" *ngIf="currentTasks.length == 0 && noTasksData == false">
+        <div class="text-center mt-3" *ngIf="currentTasks.length == 0 && noTasksData == false">
           <img src="./../../../assets/images/loader.svg"
             class="loader"
             alt="Loading ..."
@@ -104,16 +108,16 @@
           />
         </div>
 
-        <div class="text-center" *ngIf="currentTasks.length == 0 && noTasksData == true">
+        <div class="text-center mt-3" *ngIf="currentTasks.length == 0 && noTasksData == true">
           <p>{{displayedTasksMsg}}</p>
         </div>
 
       </mat-card-content>
       <mat-card-actions>
-        <button mat-flat-button class="m-1" color="primary">
+        <button mat-flat-button class="m-1" color="primary" [disabled]="!confirmationNeeded" (click)="saveCurrentTasks()">
           Save
         </button>
-        <button mat-flat-button class="m-1" color="warn">
+        <button mat-flat-button class="m-1" color="warn" [disabled]="!confirmationNeeded">
           Cancel
         </button>
       </mat-card-actions>
@@ -126,3 +130,13 @@
   </div>
   
 </section>
+
+<swal #ConfirmDelete
+  title="Are you sure?"
+  text="do you realy want to delete this task"
+  type="question"
+  [showCancelButton]="true"
+  confirmButtonText="Confirm"
+  confirmButtonColor="#c71212">
+
+</swal>

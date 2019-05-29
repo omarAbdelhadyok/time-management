@@ -9,6 +9,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from "@angular/fire/auth";
 import { environment } from 'src/environments/environment';
+
 import { MainNavComponent } from './main-nav/main-nav.component';
 import { HomeComponent } from './general/home/home.component';
 import { MaterialImportsModule } from './shared/modules/material-imports.module';
@@ -18,6 +19,7 @@ import { FormsModule } from '@angular/forms';
 import { RegisterComponent } from './general/register/register.component';
 import { ToastrModule } from 'ngx-toastr';
 import { HttpClientModule } from '@angular/common/http';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -34,6 +36,7 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserAnimationsModule,
     MaterialImportsModule,
     FormsModule,
+    SharedModule,
     AngularFireModule.initializeApp(environment.firebase, 'my-app-name'),
     AngularFirestoreModule,
     AngularFireStorageModule,

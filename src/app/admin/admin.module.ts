@@ -7,6 +7,7 @@ import { AdminHeaderComponent } from './admin-header/admin-header.component';
 import { AdminComponent } from './admin.component';
 import { MaterialImportsModule } from '../shared/modules/material-imports.module';
 import { FormsModule } from '@angular/forms';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     AdminRoutingModule,
     MaterialImportsModule,
+    SharedModule,
     FormsModule
   ]
 })
