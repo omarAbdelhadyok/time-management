@@ -12,7 +12,7 @@ import { User } from '../shared/models/user.model';
 })
 export class MainNavComponent {
 
-  isLoggedIn: boolean;
+  isLoggedIn: boolean = this.authService.isLoggedIn;
   user: User;
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
@@ -21,7 +21,7 @@ export class MainNavComponent {
     );
 
   constructor(private breakpointObserver: BreakpointObserver,
-    private authService: AuthService) {
+    public authService: AuthService) {
 
     this.authService.user$.subscribe(res => {
       if(res) {
@@ -31,6 +31,13 @@ export class MainNavComponent {
         this.isLoggedIn = false;
       }
     })
+  }
+
+  logOut() {
+    this.authService.signOut().then(() => {
+      window.location.reload()
+      localStorage.removeItem('appUser');
+    });
   }
 
 }

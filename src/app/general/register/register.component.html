@@ -1,7 +1,15 @@
 <div class="container">
-  <h2 class="app-heading" style="display: inline-block">Register</h2>
+  <h2>Register</h2>
 
-  <div class="row">
+  <div class="row" *ngIf="loggedUser">
+        
+    <div class="text-center w-100" style="color: red">
+      You are already signed in!
+    </div>
+        
+  </div>
+
+  <div class="row" *ngIf="!loggedUser">
     <form #registerForm="ngForm" class="w-100">
       <mat-form-field class="mt-2">
         <input matInput
@@ -66,7 +74,7 @@
         </div>
         
         <div class="img-display-box" *ngIf="displayImg">
-          <img [src]="displayImg" alt="Post Image">
+          <img [src]="displayImg" alt="Profile Picture">
         </div>
       </div>
     
@@ -76,7 +84,7 @@
           [disabled]="registerForm.invalid || busylogging"
           (click)="register()">
           
-          <img class="loader"
+          <img class="btn-loader"
             src="./../../../assets/images/loader.svg"
             *ngIf="busylogging"
           />
@@ -86,4 +94,5 @@
       </div>
     </form>
   </div>
+  
 </div>

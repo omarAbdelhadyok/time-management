@@ -16,7 +16,7 @@
   z-index: 1;
 }
 
-.user {
+.user, .not-logged-in {
   margin-left: auto;
   padding: 5px;
   height: 100%;

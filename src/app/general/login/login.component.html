@@ -1,64 +1,70 @@
-<!-- <section class="mt-5">
+<section class="mt-5">
   <div class="container">
-    <h2 class="mat-h2 app-heading" style="display: inline-block">
+    <h2 class="mat-h2">
       Sign In
     </h2>
-    <div class="row" *ngIf="auth.user$ | async; else elseBlock">
+    <div class="row" *ngIf="user">
         
       <div class="text-center w-100" style="color: red">
-        You are already signed in! <button (click)="auth.signOut()">logout</button>
+        You are already signed in!
       </div>
           
     </div>
-    <ng-template #elseBlock>
-      <div class="row">
+    <div class="row" *ngIf="!user">
 
-        <form class="w-100" #loingForm="ngForm">
-          <mat-form-field>
-            <input matInput
-              placeholder="E-mail"
-              type="email"
-              required
-              name="user"
-              #userEmail
-            />
-  
-            <mat-error *ngIf="userEmail.invalid">
-              E-mail is required
-            </mat-error>
-          </mat-form-field>
-  
-          <mat-form-field>
-            <input matInput
-              placeholder="Password"
-              type="password"
-              required
-              name="pass"
-              #userPassword
-            />
-  
-            <mat-error *ngIf="userPassword.invalid">
-              Password is required
-            </mat-error>
-          </mat-form-field>
-  
-          <div class="w-100 text-center mt-3">
-            <button mat-raised-button
-              color="primary"
-              [disabled]="loingForm.invalid || busylogging" 
-              (click)="auth.signInWithEmail(userEmail.value, userPassword.value)">
-  
-              <img class="loader"
-                src="./../../../assets/images/loader.svg"
-                *ngIf="busylogging"
-              />
-              
-              Sign In
-            </button>
-          </div>
-        </form>
+      <form class="w-100" #loingForm="ngForm">
+        <mat-form-field>
+          <input matInput
+            placeholder="E-mail"
+            type="email"
+            required
+            name="user"
+            #userEmail
+          />
 
+          <mat-error *ngIf="userEmail.invalid">
+            E-mail is required
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput
+            placeholder="Password"
+            type="password"
+            required
+            name="pass"
+            #userPassword
+          />
+
+          <mat-error *ngIf="userPassword.invalid">
+            Password is required
+          </mat-error>
+        </mat-form-field>
+
+        <div class="w-100 text-center mt-3">
+          <button mat-raised-button
+            color="primary"
+            [disabled]="loingForm.invalid || busylogging" 
+            (click)="signInWithMail(userEmail.value, userPassword.value)">
+
+            <img class="loader"
+              src="./../../../assets/images/loader.svg"
+              *ngIf="busylogging"
+              class="btn-loader"
+            />
+            
+            Sign In
+          </button>
+        </div>
+      </form>
+
+    </div>
+
+    <!-- <ng-template #elseBlock>
+      <div class="text-center">
+        <img src="./../../../assets/images/loader.svg" alt="" class="loader">
       </div>
-    </ng-template>
+    </ng-template> -->
+
   </div>
-</section> -->
+</section>

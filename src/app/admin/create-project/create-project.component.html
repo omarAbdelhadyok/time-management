@@ -1,5 +1,7 @@
 <section class="row mt-5">
-  <h2 class="mat-h2">Add Project</h2>
+  <h2 class="mat-h2">
+    {{pageTitle}}
+  </h2>
 
   <form class="w-100" #projectForm="ngForm">
     
@@ -14,6 +16,7 @@
         name="title"
         #title="ngModel"
         [(ngModel)]="project.title"
+        (click)="$event.target.select()"
       />
 
       <mat-error *ngIf="title.touched && title.errors?.required">
@@ -37,6 +40,7 @@
         name="description"
         #description="ngModel"
         [(ngModel)]="project.description"
+        (click)="$event.target.select()"
       />
 
       <mat-error *ngIf="description.touched && description.errors?.required">
@@ -58,17 +62,13 @@
           <input type="text"
             matInput
             placeholder="Task"
-            required
             maxlength="50"
             minlength="5"
             name="task"
             #task="ngModel"
             ngModel
+            (click)="$event.target.select()"
           />
-    
-          <mat-error *ngIf="task.touched && task.errors?.required">
-            Task is required
-          </mat-error>
     
           <mat-error *ngIf="task.touched && task.errors?.minlength">
             Task must be at least 5 charachters
@@ -76,11 +76,39 @@
           
         </mat-form-field>
 
+        <div style="display: flex">
+          <mat-form-field>
+            <input type="number"
+              matInput
+              placeholder="Duration"
+              name="duration"
+              #duration="ngModel"
+              ngModel
+              (click)="$event.target.select()"
+            />
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-select placeholder="Unit"
+              name="unit"
+              #unit="ngModel"
+              ngModel>
+
+              <mat-option value="null">None</mat-option>
+              <mat-option value="Minute">Minute</mat-option>
+              <mat-option value="Hour">Hour</mat-option>
+              <mat-option value="Day">Day</mat-option>
+              <mat-option value="Infinity">Infinity</mat-option>
+
+            </mat-select>
+          </mat-form-field>
+        </div>
+
         <div class="mt-2">
           <button mat-raised-button
             type="button"
             [disabled]="task.invalid"
-            (click)="addTask(task)">
+            (click)="addTask(task, duration, unit)">
             Add
           </button>
         </div>
@@ -89,29 +117,50 @@
 
       <div class="tasks">
         
-        <mat-list role="list" *ngIf="project.tasks?.length != 0">
-          <mat-list-item role="listitem" *ngFor="let task of project.tasks">
+        <div class="list" role="list" *ngIf="project.tasks?.length != 0">
+          <div class="tasks-list-item"
+            role="listitem"
+            *ngFor="let task of project.tasks; index as i"
+            (click)="deleteTask(i)">
             {{task.task}}
+            <span class="task-time" *ngIf="task.time">{{task.time}}</span>
             <mat-divider></mat-divider>
-          </mat-list-item>
-        </mat-list>
+          </div>
+        </div>
         
       </div>
     </div>
 
+    <div>
+      
+      <label>Project Status</label>
+      <br>
+      <mat-radio-group class="project-status"
+        name="status"
+        [(ngModel)]="project.closed">
+        <mat-radio-button class="status-radio"
+          *ngFor="let status of projectStatus"
+          [value]="status.value">
+          {{status.name}}
+        </mat-radio-button>
+      </mat-radio-group>
+      
+    </div>
 
     <div class="mt-3 text-center">
       <button mat-raised-button
         color="primary"
         [disabled]="projectForm.invalid || busyCreating || busyUpdating"
         (click)="onSave()">
-        Save
 
         <img *ngIf="busyCreating || busyUpdating"
           src="./../../../assets/images/loader.svg"
-          alt="Loader ..."
-          style="width: 25px; height: 25px;"
+          alt="Loading ..."
+          title="Loading ..."
+          class="btn-loader"
         />
+        
+        Save
       </button>
     </div>
 

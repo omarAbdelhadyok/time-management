@@ -27,12 +27,20 @@ export class AuthService {
         }
       })
     )
+
+    this.user$.subscribe(res => {
+      localStorage.setItem('appUser', JSON.stringify(res));
+    })
   }
 
   async googleSignIn() {
     const provider = new auth.GoogleAuthProvider();
     const credential = await this.afAuth.auth.signInWithPopup(provider);
     return this.updateUserData(credential.user)
+  }
+
+  signInWithMail(email: string, password: string) {
+    return this.afAuth.auth.signInWithEmailAndPassword(email, password);
   }
 
   registerWithEmail(email, password) {
@@ -55,6 +63,20 @@ export class AuthService {
     };
 
     return userRef.set(data, {merge: true});
+  }
+
+  updateUser(id, displayName, photoURL) {
+    const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${id}`);
+    return userRef.update({displayName, photoURL})
+  }
+
+  get isLoggedIn(): boolean {
+    const user = JSON.parse(localStorage.getItem('appUser'));
+    return user !== null;
+  }
+
+  getById(id: string) {
+    return this.afs.collection(`users`).doc<User>(id).valueChanges();
   }
 
   

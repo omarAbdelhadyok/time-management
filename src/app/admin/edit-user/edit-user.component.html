@@ -1,0 +1,69 @@
+<section class="row mt-5">
+  <h2 class="mat-h2 w-100">
+    Edit Profile
+  </h2>
+
+  <div class="w-100" *ngIf="user; else elseBlock">
+    <form #editUserFrom="ngForm" class="w-100">
+      <mat-form-field class="mt-2">
+        <input matInput
+          placeholder="Full Name"
+          type="text"
+          name="fullname"
+          required
+          [(ngModel)]="user.displayName"
+          #fullName="ngModel"
+        />
+    
+        <mat-error *ngIf="fullName.invalid">
+          Name is required
+        </mat-error>
+      </mat-form-field>
+  
+      <div class="mt-2">
+        <div>
+          <label class="custom-file-upload"
+            for="ImgInput">
+            Profile Picture
+          </label>
+          <input type="file"
+            name="postImg"
+            id="ImgInput"
+            (change)="onPostImageUpload($event)"
+          />
+        </div>
+        
+        <div class="img-display-box" *ngIf="displayImg || user.photoURL">
+          <img [src]="displayImg? displayImg : user.photoURL" alt="Post Image">
+        </div>
+      </div>
+    
+      <div class="w-100 text-center mt-3">
+        <button mat-raised-button
+          color="primary"
+          [disabled]="editUserFrom.invalid || busyUpdating"
+          (click)="updateUser()">
+  
+          <img *ngIf="busyUpdating"
+            src="./../../../assets/images/loader.svg"
+            alt="Loading ..."
+            title="Loading ..."
+            class="btn-loader"
+          />
+          
+          Save
+        </button>
+      </div>
+    </form>
+  </div>
+  <ng-template #elseBlock>
+    <div class="w-100 text-center">
+      <img class="loader"
+        src="./../../../assets/images/loader.svg"
+        alt="Loading ..."
+        title="Loading ..."
+      />
+    </div>
+  </ng-template>
+
+</section>

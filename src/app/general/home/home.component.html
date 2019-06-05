@@ -1,1 +1,65 @@
-home
+<app-header></app-header>
+
+<div class="container">
+    <div class="row">
+        
+        <div class="left-side">
+            <div>
+                <h2 class="mat-display-1">
+                    Value Your Time!
+                </h2>
+                <p class="mat-h2">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda natus impedit cupiditate adipisci earum, praesentium aliquid delectus, deleniti quasi aspernatur vitae soluta illum, voluptas porro sed! Exercitationem aliquid nobis distinctio eius dignissimos. Ut officiis voluptates magnam similique! Vero, porro quos.
+                </p>
+            </div>
+        </div>
+
+        <div class="right-side">
+            
+            <div class="order-box">
+
+                <!--slides that shows or disappear on indicator clicks-->
+                <div class="first-slide" [@fade]="firstSlideState">
+                    <div class="dinner-img">
+                    <img src="./../../../assets/images/home1.svg" alt="Table" title="Hang Out">
+                    </div>
+                    <p class="qoute p-2">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur, neque! Id excepturi modi delectus, at eligendi eaque nostrum quasi animi?
+                    </p>
+                </div>
+        
+                <div class="second-slide" [@fade]="secondSlideState">
+                    <div class="dinner-img">
+                    <img src="./../../../assets/images/home2.svg" alt="Table" title="Hang Out">
+                    </div>
+                    <p class="qoute p-2">
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Deleniti earum ratione qui suscipit modi, fuga id soluta ad nulla accusantium!
+                    </p>
+                </div>
+        
+                <div class="third-slide" [@fade]="thirdSlideState">
+                    <div class="dinner-img">
+                    <img src="./../../../assets/images/home3.svg" alt="Table" title="Hang Out">
+                    </div>
+                    <p class="qoute p-2">
+                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Error quibusdam aperiam at expedita magni magnam delectus molestias natus. Iste, quasi?
+                    </p>
+                </div>
+                
+                <!--after div holding indicators-->
+                <div class="after">
+                    <div class="indicator activeIndicator" #firstIndicator (click)="showFirstSlide(firstIndicator)">
+        
+                    </div>
+                    <div class="indicator" #secondIndicator (click)="showSecondSlide(secondIndicator)">
+        
+                    </div>
+                    <div class="indicator" #thirdIndicator (click)="showThirdSlide(thirdIndicator)">
+                    
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

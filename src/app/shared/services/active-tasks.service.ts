@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore, DocumentReference } from '@angular/fire/firestore';
 import { ActiveTask } from '../models/active-task.model';
 import * as firebase from 'firebase';
 
@@ -20,6 +20,17 @@ export class ActiveTasksService {
 
     create(id, data) {
         return this.db.collection<ActiveTask>(`activeTasks`).doc(id).set({ ...data });
+    }
+
+    ct(tasks) {
+        let batch = this.db.firestore.batch();
+
+        tasks.forEach(task => {
+            let docRef = this.db.collection(`activeTasks`).doc(task.id).ref as DocumentReference
+            batch.set(docRef, task)
+        });
+
+        return batch.commit();
     }
 
     // update(id: string, data) {

@@ -69,5 +69,21 @@ export class ObjectsOperationsService {
     }
     return arrCopy;
   }
+  public copyObjectwithArrayofObjects(object) {
+    let keys = Object.keys(object),
+        objCopy: any = {};
+    for(let key of keys) {
+      if(typeof object[key] == 'string' || typeof object[key] == 'number' || typeof object[key] == 'boolean') {
+        objCopy[key] = object[key];
+      } else if(typeof object[key] == 'object') {
+        if(Array.isArray(object[key])) {
+          objCopy[key] = this.copyArrayOfObjects(object[key])
+        } else {
+          objCopy[key] = this.copyObjectwithArrayofObjects(object[key]);
+        }
+      }
+    }
+    return objCopy;
+  }
 
 }

@@ -67,7 +67,7 @@ $fouadOsama-theme: mat-light-theme($fouadOsama-primary, $fouadOsama-accent, $fou
   box-sizing: border-box;
 }
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, sans-serif !important; }
+body { margin: 0; font-family: 'Roboto Slab', serif; }
 
 //general styles
 .container {
@@ -197,12 +197,6 @@ mat-form-field {
   display: none;
 }
 
-.app-heading {
-  border: 1px solid $primary;
-  padding: 5px;
-  border-radius: 5px;
-}
-
 .app-button  {
   outline: none;
   border: none;
@@ -315,4 +309,9 @@ button:disabled {
 
 .mat-card-header-text {
   margin: 0 !important;
+}
+
+.btn-loader {
+  width: 15px;
+  height: 15px;
 }

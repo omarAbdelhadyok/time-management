@@ -20,6 +20,8 @@ import { RegisterComponent } from './general/register/register.component';
 import { ToastrModule } from 'ngx-toastr';
 import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from './shared/shared.module';
+import { HeaderComponent } from './general/header/header.component';
+import { FooterComponent } from './general/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,9 @@ import { SharedModule } from './shared/shared.module';
     HomeComponent,
     LoginComponent,
     NotFoundComponent,
-    RegisterComponent
+    RegisterComponent,
+    HeaderComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

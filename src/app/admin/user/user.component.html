@@ -1,0 +1,36 @@
+<section>
+  <div class="row mt-5" *ngIf="user; else elseBlock">
+    <h1 class="mat-h1 w-100">
+      {{user.displayName}}'s Profile
+    </h1>
+    <div class="profile-data">
+      <div class="pp">
+        <img [src]="user.photoURL" [alt]="user.displayName" [title]="user.displayName">
+      </div>
+      <div class="info">
+        <h2 class="mat-h2">
+          {{user.displayName}}
+        </h2>
+        <p class="mat-body-1">
+          {{user.email}}
+        </p>
+        <div>
+          <button mat-raised-button color="primary" routerLink="/admin/edit-profile/{{user.uid}}">
+            Edit Profile
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-template #elseBlock>
+    <div class="row mt-5">
+      <div class="w-100 text-center">
+        <img src="./../../../assets/images/loader.svg"
+          class="loader"
+          alt="Loading ..."
+          title="Loading ...">
+      </div>
+    </div>
+  </ng-template>
+  
+</section>

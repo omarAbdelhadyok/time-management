@@ -1,16 +1,23 @@
 import { Injectable } from "@angular/core";
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore, DocumentReference } from '@angular/fire/firestore';
 import { Project } from '../models/project.model';
+import { User } from '../models/user.model';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ProjectsService {
 
-    constructor(private db: AngularFirestore) { }
+    user: User = JSON.parse(localStorage.getItem('appUser'));
+
+    constructor(private db: AngularFirestore) {}
 
     getAll() {
-        return this.db.collection<Project>(`projects`).ref.orderBy('date', 'desc').get();
+        return this.db.collection<Project>(`projects`).ref.orderBy('date', 'desc').where('uid', '==', this.user.uid).get(); 
+    }
+
+    getActive() {
+        return this.db.collection<Project>(`projects`).ref.orderBy('date', 'desc').where('uid', '==', this.user.uid).where('closed', '==', false).get(); 
     }
 
     getById(id: string) {
@@ -27,6 +34,17 @@ export class ProjectsService {
 
     delete(id: string) {
         return this.db.collection<Project>(`projects`).doc(id).delete();
+    }
+
+    updateTasks(id, tasks) {
+        let batch = this.db.firestore.batch();
+        let docRef = this.db.collection(`projects`).doc(id).ref as DocumentReference;
+        batch.update(docRef, {tasks: tasks});
+        return batch.commit();
+    }
+
+    toggleProject(id: string, status: boolean) {
+        return this.db.collection<Project>(`projects`).doc(id).update({closed: status})
     }
 
 }

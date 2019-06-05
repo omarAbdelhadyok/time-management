@@ -16,6 +16,7 @@ export class RegisterComponent implements OnInit {
   busylogging = false;
   hide = true;
   displayImg;
+  loggedUser: any = this.authService.isLoggedIn;
 
   constructor(private authService: AuthService,
     private photosService: PhotosService,
@@ -23,6 +24,13 @@ export class RegisterComponent implements OnInit {
     private toastr: ToastrService) { }
 
   ngOnInit() {
+    this.authService.user$.subscribe(res => {
+      if(res) {
+        this.loggedUser = res;
+      } else {
+        this.loggedUser = null;
+      }
+    })
   }
 
   //get base64 for item photo
@@ -38,7 +46,6 @@ export class RegisterComponent implements OnInit {
 
     myReader.onloadend = (e) => {
       this.displayImg = myReader.result;
-      console.log(this.displayImg)
     }
     myReader.readAsDataURL(file);
   }

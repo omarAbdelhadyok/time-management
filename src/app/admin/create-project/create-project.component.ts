@@ -5,7 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { NgForm } from '@angular/forms';
 import * as uuidv1 from 'uuid/v1.js';
-import { MatInput } from '@angular/material';
+import { MatInput, MatSelect } from '@angular/material';
 import { Task } from 'src/app/shared/models/task.model';
 
 @Component({
@@ -26,6 +26,11 @@ export class CreateProjectComponent implements OnInit {
   busyDeleting: boolean = false;
   busyUpdating: boolean = false;
 
+  projectStatus = [
+    {name: 'Active', value: false},
+    {name: 'Closed', value: true},
+  ]
+
   constructor(private projectsService: ProjectsService,
     private router: Router,
     private route: ActivatedRoute,
@@ -35,11 +40,11 @@ export class CreateProjectComponent implements OnInit {
   ngOnInit() {
     this.projectId = this.route.snapshot.params.id;
     if(this.projectId) {
-      this.getWorkById();
-      this.pageTitle = 'Edit Work';
+      this.getProjectById();
+      this.pageTitle = 'Edit Project';
     } else {
       this.reset();
-      this.pageTitle = 'Add Work';
+      this.pageTitle = 'Add Project';
     }
   }
 
@@ -49,7 +54,7 @@ export class CreateProjectComponent implements OnInit {
   }
 
   //get article by id
-  getWorkById() {
+  getProjectById() {
     try {
       this.busyLoading = true;
       this.projectsService.getById(this.projectId).subscribe(res => {
@@ -69,20 +74,32 @@ export class CreateProjectComponent implements OnInit {
     }
   }
 
-  addTask(taskInput: MatInput) {
-    let task = taskInput.value.trim();
-    if(task == '') return this.toastr.error('Please type a valid task');
+  addTask(taskInput: MatInput, durationInput: MatInput, unitSelect: MatSelect) {
+    let task = taskInput.value.trim(),
+        duration = durationInput.value,
+        unit = unitSelect.value;
+    if(unit == 'null') unit = null;
+    if((!duration && unit) || (duration && !unit))
+      return this.toastr.warning('To add duration fill both duration and unit');
+    if(!task) return this.toastr.error('Please type a valid task');
+    if(parseInt(duration) > 1) unit = unit+'s';
     let newTask: Task = {
       task: task,
       done: false,
-      current: false
+      current: false,
+      id: uuidv1(),
+      time: `${duration} ${unit}`
     }
     this.project.tasks.push(newTask)
   }
 
+  deleteTask(taskIndex) {
+    this.project.tasks.splice(taskIndex, 1);
+  }
+
   onSave() {
     if(this.projectId) {
-      // this.updateProject(this.workId);
+      this.updateProject(this.projectId);
     } else {
       this.createProject();
     }
@@ -101,6 +118,7 @@ export class CreateProjectComponent implements OnInit {
       let date = new Date();
       this.project.date = date.valueOf();
       let projectId = uuidv1();
+      this.project.tasks.forEach(task => task.projectId = projectId);
       this.projectsService.create(projectId, this.project)
       .then(res => {
         this.busyCreating = false;
