@@ -12,12 +12,14 @@ export class ProjectsService {
 
     constructor(private db: AngularFirestore) {}
 
-    getAll() {
-        return this.db.collection<Project>(`projects`).ref.orderBy('date', 'desc').where('uid', '==', this.user.uid).get(); 
-    }
-
-    getActive() {
-        return this.db.collection<Project>(`projects`).ref.orderBy('date', 'desc').where('uid', '==', this.user.uid).where('closed', '==', false).get(); 
+    getAll(option) {
+        if(option == 'all') {
+            return this.db.collection<Project>(`projects`).ref.orderBy('date', 'desc').where('uid', '==', this.user.uid).limit(50).get();
+        } else if(option == 'active') {
+            return this.db.collection<Project>(`projects`).ref.orderBy('date', 'desc').where('uid', '==', this.user.uid).where('closed', '==', false).limit(50).get(); 
+        } else if(option == 'closed') {
+            return this.db.collection<Project>(`projects`).ref.orderBy('date', 'desc').where('uid', '==', this.user.uid).where('closed', '==', true).limit(50).get(); 
+        }
     }
 
     getById(id: string) {

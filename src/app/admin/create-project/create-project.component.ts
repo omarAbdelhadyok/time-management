@@ -7,6 +7,8 @@ import { NgForm } from '@angular/forms';
 import * as uuidv1 from 'uuid/v1.js';
 import { MatInput, MatSelect } from '@angular/material';
 import { Task } from 'src/app/shared/models/task.model';
+import { AuthService } from 'src/app/shared/services/auth.service';
+import { User } from 'src/app/shared/models/user.model';
 
 @Component({
   selector: 'app-create-project',
@@ -19,6 +21,7 @@ export class CreateProjectComponent implements OnInit {
 
   pageTitle: string = 'Add Project';
   project: Project = new Project();
+  user: User;
 
   projectId;
   busyCreating: boolean = false;
@@ -34,8 +37,11 @@ export class CreateProjectComponent implements OnInit {
   constructor(private projectsService: ProjectsService,
     private router: Router,
     private route: ActivatedRoute,
-    private toastr: ToastrService
-  ) { }
+    private toastr: ToastrService,
+    private authService: AuthService
+  ) {
+    this.authService.user$.subscribe(res => this.user = res)
+  }
 
   ngOnInit() {
     this.projectId = this.route.snapshot.params.id;
@@ -117,6 +123,7 @@ export class CreateProjectComponent implements OnInit {
     try {
       let date = new Date();
       this.project.date = date.valueOf();
+      this.project.uid = this.user.uid;
       let projectId = uuidv1();
       this.project.tasks.forEach(task => task.projectId = projectId);
       this.projectsService.create(projectId, this.project)

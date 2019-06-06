@@ -1,14 +1,18 @@
 header {
     height: 100%;
     display: flex;
-    // background: url('./../../../assets/images/header.svg') center no-repeat;
-    // background-size: cover;
+    overflow: hidden;
+    flex-wrap: wrap;
 
     .left-side {
         width: 50%;
         display: flex;
         justify-content: center;
         align-items: center;
+
+        @media screen and (max-width: 992px) {
+            width: 100%;
+        }
 
         .subtitle {
             color: #777;
@@ -18,6 +22,10 @@ header {
     .right-side {
         width: 50%;
         padding: 10px;
+
+        @media screen and (max-width: 992px) {
+            width: 100%;
+        }
 
         img {
             width: 100%;

@@ -9,6 +9,8 @@ import { FormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { UserComponent } from './user/user.component';
 import { EditUserComponent } from './edit-user/edit-user.component';
+import { ProjectsComponent } from './projects/projects.component';
+import { ProjectsHeaderComponent } from './projects/projects-header/projects-header.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { EditUserComponent } from './edit-user/edit-user.component';
     CreateProjectComponent,
     AdminComponent,
     UserComponent,
-    EditUserComponent
+    EditUserComponent,
+    ProjectsComponent,
+    ProjectsHeaderComponent
   ],
   imports: [
     CommonModule,

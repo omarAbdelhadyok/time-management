@@ -15,6 +15,10 @@
                 border: 1px solid #DDD;
                 border-radius: 5px;
                 margin: 1%;
+
+                @media screen and (max-width: 992px) {
+                    width: 100%;
+                }
     
                 .add-task-btn {
                     margin-top: 10px;
@@ -31,82 +35,96 @@
                 margin: 1%;
                 text-align: center;
 
-                .active-task {
-                    position: relative;
-        
-                    .deleting-task {
-                        &:hover {
-                            .icon-bin {
-                                opacity: 0 !important;
-                                transform: translateX(5px) !important;
-                            }
-                        }
-                    }
-        
-                    .active-task-line {
-                        display: flex;
-                        align-items: center;
-                        padding: 12px 0;
-                        font-size: 16px;
-        
-                        &:hover {
-                            .icon-bin {
-                                opacity: 1;
-                                transform: translateX(0);
-                            }
-                        }
-        
-                        .icon-bin {
-                            display: inline-block;
-                            color: $warn;
-                            opacity: 0;
-                            transform: translateX(5px);
-                            transition: all 0.3s ease-in-out;
-                            width: 2%;
-                        
+                @media screen and (max-width: 992px) {
+                    width: 100%;
+                }
+
+                .tasks-holder {
+                    max-height: 320px;
+                    overflow: auto;
+
+                    .active-task {
+                        position: relative;
+                        min-width: 600px;
+            
+                        .deleting-task {
                             &:hover {
-                                cursor: pointer;
-                                color: #333;
-                            }
-                        }
-
-                        .active-task-text {
-                            width: 78%;
-                            margin: 0 1%;
-                            text-align: left;
-                            display: flex;
-                            align-items: center;
-
-                            .active-task-project-title {
-                                margin: 0 10px;
-                                background-color: $primary;
-                                border-radius: 4px;
-                                padding: 5px;
-                                color: #FFF;
-                                display: inline-block;
-                            }
-
-                            .active-task-task {
-                                display: inline-block;
-                                margin: 0;
-                            }
-
-                            .time-badge {
-                                margin-left: auto;
-                                display: inline-flex;
-                                align-items: center;
-                                border: 1px solid #DDD;
-                                border-radius: 2px;
-                                padding: 4px;
-
-                                small {
-                                    margin-left: 2px;
+                                .icon-bin {
+                                    opacity: 0 !important;
+                                    transform: translateX(5px) !important;
                                 }
                             }
                         }
+            
+                        .active-task-line {
+                            display: flex;
+                            align-items: center;
+                            padding: 12px 0;
+                            font-size: 16px;
+            
+                            &:hover {
+                                .icon-bin {
+                                    opacity: 1;
+                                    transform: translateX(0);
+                                }
+                            }
+            
+                            .icon-bin {
+                                display: inline-block;
+                                color: $warn;
+                                opacity: 0;
+                                transform: translateX(5px);
+                                transition: all 0.3s ease-in-out;
+                                width: 2%;
+                            
+                                &:hover {
+                                    cursor: pointer;
+                                    color: #333;
+                                }
+                            }
+    
+                            .active-task-text {
+                                width: 78%;
+                                margin: 0 1%;
+                                text-align: left;
+                                display: flex;
+                                align-items: center;
+    
+                                .active-task-project-title {
+                                    margin: 0 10px;
+                                    background-color: $primary;
+                                    border-radius: 4px;
+                                    padding: 5px;
+                                    color: #FFF;
+                                    display: inline-block;
+                                }
+    
+                                .active-task-task {
+                                    display: inline-block;
+                                    margin: 0;
+                                }
+    
+                                .time-badge {
+                                    margin-left: auto;
+                                    display: inline-flex;
+                                    align-items: center;
+                                    border: 1px solid #DDD;
+                                    border-radius: 2px;
+                                    padding: 4px;
+    
+                                    small {
+                                        margin-left: 2px;
+                                    }
+                                }
+                            }
+    
+                            .complete-btn {
+                                width: 18%;
 
-                        .complete-btn {
-                            width: 18%;
+                                .btn-loader {
+                                    display: none;
+                                }
+                            }
                         }
                     }
                 }
@@ -124,83 +142,9 @@
     padding: 10px;
     margin-top: 10px;
 
-    .project-card {
-        max-width: 360px;
-        margin: 0 5px;
-        position: relative;
-
-        .icon-list-menu {
-            position: absolute;
-            right: 8px;
-            top: 8px;
-            color: #333;
-
-            &:hover {
-                color: #999;
-                cursor: pointer;
-            }
-        }
-
-        .new-task-box {
-            display: flex;
-            flex-wrap: wrap;
-
-            .new-task-duration, .new-task-unit {
-                width: 50%;
-            }
-
-            .add-task-btn {
-                width: 100%;
-                text-align: right;
-            }
-        }
-
-        .project-tasks-list {
-            margin-top: 10px;
-
-            .project-list-item {
-                border-radius: 5px;
-                font-size: 1rem;
-                padding: 5px;
-                margin: 5px 0;
-                display: flex;
-                align-items: center;
-                background-color: #EEE !important;
-
-                .project-task-text {
-                    display: inline-block;
-                    margin: 0;
-                }
-
-                .completed-badge {
-                    background-color: $accent;
-                }
-
-                .active-badge {
-                    background-color: $primary;
-                }
-
-                .holding-badge {
-                    background-color: $third;
-                }
-
-                .active-badge, .completed-badge, .holding-badge {
-                    margin-left: auto;
-                    color: #FFF;
-                    border-radius: 3px;
-                    padding: 3px;
-                    display: inline-flex;
-                    
-                    .icon-clock, .icon-checkmark, .icon-calendar {
-                        font-size: 16px;
-                    }
-                }
-            }
-
-            .completed-task {
-                text-decoration: line-through;
-            }
-        }
+    app-projects-viewer {
+        width: 100%;
+        display: flex;
     }
 }
 

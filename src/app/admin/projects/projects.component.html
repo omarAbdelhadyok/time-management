@@ -1,0 +1,40 @@
+<app-projects-header></app-projects-header>
+
+<section class="row mt-5">
+    <div class="projects">
+        <div class="projects-heading">
+            <h2 class="mat-h2">
+                All Projects
+            </h2>
+
+            <mat-select class="view-select" placeholder="View" (selectionChange)="getProjects($event)">
+                <mat-option *ngFor="let option of viewOptions" [value]="option.value">
+                    {{option.title}}
+                </mat-option>
+            </mat-select>
+        </div>
+    
+        <div class="w-100" *ngIf="projects.length != 0">
+          <app-projects-viewer [projects]="projects"
+            (reset)="reset()"
+            (getProjects)="refreshProjects()">
+          </app-projects-viewer>
+        </div>
+    
+       <div class="text-center mt-3" *ngIf="projects.length == 0 && noData == false">
+          <img src="./../../../assets/images/loader.svg"
+            class="loader"
+            alt="Loading ..."
+            title="Loading ..."
+          />
+        </div>
+    
+        <div class="text-center mt-3" *ngIf="projects.length == 0 && noData == true">
+          <p>{{displayedMsg}}</p>
+          <button *ngIf="showAddProjectsBtn" mat-button color="primary">
+              Add Project
+          </button>
+        </div>
+    
+    </div>
+</section>

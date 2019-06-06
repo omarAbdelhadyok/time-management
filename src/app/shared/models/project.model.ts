@@ -15,5 +15,6 @@ export class Project {
     date: number;
     closed: boolean;
     selected?: boolean;
+    uid: string;
     id?: string;
 }

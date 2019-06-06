@@ -1,14 +1,12 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Renderer2 } from '@angular/core';
 import { ProjectsService } from 'src/app/shared/services/projects.service';
 import { Project } from 'src/app/shared/models/project.model';
-import { MatSelectChange, MatSelect, MatInput } from '@angular/material';
+import { MatSelectChange } from '@angular/material';
 import { NgForm } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { ObjectsOperationsService } from 'src/app/shared/services/local/object-operations.service';
-import * as uuidv1 from 'uuid/v1.js';
 
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import { Task } from 'src/app/shared/models/task.model';
 
 @Component({
   selector: 'app-tasks',
@@ -33,7 +31,6 @@ import { Task } from 'src/app/shared/models/task.model';
 export class TasksComponent implements OnInit {
 
   @ViewChild('addTaskFrom') addTaskFrom: NgForm;
-  @ViewChild('projectTaskFrom') projectTaskFrom: NgForm;
 
   projects: Project[] = [];
   noData: boolean = false;
@@ -45,17 +42,15 @@ export class TasksComponent implements OnInit {
   busyDeletingActiveTask: boolean = false;
   busySettingTaskComplete: boolean = false;
 
-  busyAddingNewProjectTask: boolean = false;
-  busyClosingProject: boolean = false;
-
   panelOpenState: boolean = false;
 
   constructor(private projectsService: ProjectsService,
     private toastr: ToastrService,
-    private objectsOperationsService: ObjectsOperationsService) { }
+    private objectsOperationsService: ObjectsOperationsService,
+    private renderer: Renderer2) { }
 
   ngOnInit() {
-    this.getAllProjects();
+    this.getAllProjects('all');
   }
 
   reset() {
@@ -65,9 +60,9 @@ export class TasksComponent implements OnInit {
   }
 
   //getting all projects
-  getAllProjects() {
+  getAllProjects(option) {
     try {
-      this.projectsService.getActive().then(snapshot => {
+      this.projectsService.getAll(option).then(snapshot => {
         snapshot.docs.map(doc => {
           const data = doc.data() as Project;
           const id = doc.id;
@@ -170,7 +165,7 @@ export class TasksComponent implements OnInit {
     this.toastr.info('You cancelled deleting the task');
   }
 
-  setTaskAsDone(projectIndex, taskIndex) {
+  setTaskAsDone(projectIndex, taskIndex, loader) {
     let project = this.projects[projectIndex],
         tasks = this.objectsOperationsService.copyArrayOfObjects(project.tasks);
 
@@ -178,90 +173,32 @@ export class TasksComponent implements OnInit {
     tasks[taskIndex].done = true;
 
     try {
+      this.renderer.setStyle(loader, 'display', 'inline-block');
       this.busySettingTaskComplete = true;
       this.projectsService.updateTasks(project.id, tasks)
       .then(res => {
         this.busySettingTaskComplete = false;
         project.tasks[taskIndex].done = true;
         project.tasks[taskIndex].current = false;
+        this.renderer.setStyle(loader, 'display', 'none');
       })
       .catch(err => {
         this.toastr.error('Something went wrong, please try again');
         console.log(err);
         this.busySettingTaskComplete = false;
+        this.renderer.setStyle(loader, 'display', 'none');
       })
     } catch (error) {
       this.toastr.error('Something went wrong, please try again');
       console.log(error);
       this.busySettingTaskComplete = false;
+      this.renderer.setStyle(loader, 'display', 'none');
     }
 
   }
 
 
 
-  //projects methods
   
-  addNewTaskToProject(taskInput: MatInput, durationInput: MatInput, unitSelect: MatSelect, projectCardIndex) {
-    let project = this.projects[projectCardIndex],
-        tasks = this.objectsOperationsService.copyArrayOfObjects(project.tasks),
-        task = taskInput.value.trim(),
-        duration = durationInput.value,
-        unit = unitSelect.value;
-    if((!duration && unit) || (duration && !unit))
-      return this.toastr.warning('To add duration fill both duration and unit');
-    if(!task) return this.toastr.error('Please type a valid task');
-    if(parseInt(duration) > 1) unit = unit+'s';
-    let newTask: Task = {
-      task: task,
-      done: false,
-      current: false,
-      id: uuidv1(),
-      time: `${duration} ${unit}`,
-      projectId: project.id
-    }
-    tasks.push(newTask)
-    try {
-      this.busyAddingNewProjectTask = true;
-      this.projectsService.updateTasks(project.id, tasks)
-      .then(res => {
-        this.busyAddingNewProjectTask = false;
-        this.projects[projectCardIndex].tasks.push(newTask);
-        this.projectTaskFrom.resetForm();
-        this.toastr.success('Task was added successfully');
-      })
-      .catch(err => {
-        this.toastr.error('Something went wrong, please try again');
-        console.log(err);
-        this.busyAddingNewProjectTask = false;
-      })
-    } catch (error) {
-      this.toastr.error('Something went wrong, please try again');
-      console.log(error);
-      this.busyAddingNewProjectTask = false;
-    }
-  }
-
-  closeProject(projectId) {
-    try {
-      this.busyClosingProject = true;
-      this.projectsService.toggleProject(projectId, true)
-      .then(res => {
-        this.busyClosingProject = false;
-        this.reset();
-        this.getAllProjects();
-        this.toastr.success('Project was closed successfully');
-      })
-      .catch(err => {
-        this.toastr.error('Something went wrong, please try again');
-        console.log(err);
-        this.busyClosingProject = false;
-      })
-    } catch (error) {
-      this.toastr.error('Something went wrong, please try again');
-      console.log(error);
-      this.busyClosingProject = false;
-    }
-  }
   
 }

@@ -1,0 +1,116 @@
+<mat-card class="project-card" *ngFor="let project of projects; index as projectCardI">
+
+  <i class="icon-list-menu" [matMenuTriggerFor]="menu"></i>
+
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item
+      routerLink="/admin/edit-project/{{project.id}}">
+      <i class="icon-cog"></i>
+      Edit Project
+    </button>
+    <button mat-menu-item
+      [disabled]="busyClosingProject"
+      (click)="closeProject(project.id)">
+      <i class="icon-lock"></i>
+      Close Project
+    </button>
+  </mat-menu>
+
+  <mat-card-header>
+    <mat-card-title>{{project.title}}</mat-card-title>
+    <mat-card-subtitle>{{project.description}}</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-divider></mat-divider>
+
+  <mat-card-content>
+
+    <form class="new-task-box" #projectTaskFrom="ngForm">
+      <mat-form-field class="mt-2">
+        <input type="text"
+          matInput 
+          placeholder="New Task"
+          name="new-task-btn"
+          #newTask="ngModel"
+          ngModel
+          required
+          (click)="$event.target.select()"
+        />
+        <!--complete the add task to project method -->
+        <mat-error *ngIf="newTask.touched && newTask.errors?.required">
+          Task is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="mt-2 new-task-duration">
+        <input type="number"
+          matInput
+          placeholder="Duration"
+          name="duration"
+          #duration="ngModel"
+          ngModel
+          (click)="$event.target.select()"
+        />
+      </mat-form-field>
+
+      <mat-form-field class="mt-2 new-task-unit">
+        <mat-select placeholder="Unit"
+          name="unit"
+          #unit="ngModel"
+          ngModel>
+
+          <mat-option value="null">None</mat-option>
+          <mat-option value="Minute">Minute</mat-option>
+          <mat-option value="Hour">Hour</mat-option>
+          <mat-option value="Day">Day</mat-option>
+          <mat-option value="Infinity">Infinity</mat-option>
+
+        </mat-select>
+      </mat-form-field>
+
+      <div class="add-task-btn">
+        <button mat-flat-button color="accent"
+          [disabled]="projectTaskFrom.invalid || busyAddingNewProjectTask"
+          (click)="addNewTaskToProject(newTask, duration, unit, projectCardI, loader, projectTaskFrom)">
+
+          <img src="./../../../assets/images/loader.svg"
+            #loader
+            alt="Loading ..."
+            title="Loading ..."
+            class="btn-loader"
+          />
+
+          ADD
+        </button>
+      </div>
+    </form>
+
+    <br>
+    <mat-divider></mat-divider>
+
+    <div class="project-tasks-list">
+      
+      <div class="project-list-item" *ngFor="let task of project.tasks">
+        <p class="project-task-text"
+          [ngClass]="{'completed-task': task.done}">
+          {{task.task}}
+        </p>
+        <small class="active-badge" title="Active" *ngIf="task.current">
+          <i class="icon-clock"></i>
+        </small>
+        <small class="completed-badge" title="Completed" *ngIf="task.done">
+          <i class="icon-checkmark"></i>
+        </small>
+        <small class="holding-badge" title="Completed" *ngIf="!task.done && !task.current">
+          <i class="icon-calendar"></i>
+        </small>
+      </div>
+
+    </div>
+    
+  </mat-card-content>
+  <!-- <mat-card-actions>
+    <button mat-button>LIKE</button>
+    <button mat-button>SHARE</button>
+  </mat-card-actions> -->
+</mat-card>

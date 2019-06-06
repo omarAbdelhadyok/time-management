@@ -1,0 +1,86 @@
+@import './../../../../assets/css/variables.scss';
+
+.project-card {
+    max-width: 360px;
+    margin: 0 5px;
+    position: relative;
+
+    .icon-list-menu {
+        position: absolute;
+        right: 8px;
+        top: 8px;
+        color: #333;
+
+        &:hover {
+            color: #999;
+            cursor: pointer;
+        }
+    }
+
+    .new-task-box {
+        display: flex;
+        flex-wrap: wrap;
+
+        .new-task-duration, .new-task-unit {
+            width: 50%;
+        }
+
+        .add-task-btn {
+            width: 100%;
+            text-align: right;
+
+            .btn-loader {
+                display: none;
+            }
+        }
+    }
+
+    .project-tasks-list {
+        margin-top: 10px;
+        max-height: 300px;
+        overflow: auto;
+
+        .project-list-item {
+            border-radius: 5px;
+            font-size: 1rem;
+            padding: 5px;
+            margin: 5px 0;
+            display: flex;
+            align-items: center;
+            background-color: #EEE !important;
+
+            .project-task-text {
+                display: inline-block;
+                margin: 0;
+            }
+
+            .completed-badge {
+                background-color: $accent;
+            }
+
+            .active-badge {
+                background-color: $primary;
+            }
+
+            .holding-badge {
+                background-color: $third;
+            }
+
+            .active-badge, .completed-badge, .holding-badge {
+                margin-left: auto;
+                color: #FFF;
+                border-radius: 3px;
+                padding: 3px;
+                display: inline-flex;
+                
+                .icon-clock, .icon-checkmark, .icon-calendar {
+                    font-size: 16px;
+                }
+            }
+        }
+
+        .completed-task {
+            text-decoration: line-through;
+        }
+    }
+}

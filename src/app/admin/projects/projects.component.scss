@@ -1,0 +1,20 @@
+.projects {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+
+    .projects-heading {
+        display: flex;
+        flex-wrap: wrap;
+        
+        .view-select {
+            width: 150px;
+            margin-left: auto;
+        }
+    }
+
+    app-projects-viewer {
+        width: 100%;
+        display: flex;
+    }
+}

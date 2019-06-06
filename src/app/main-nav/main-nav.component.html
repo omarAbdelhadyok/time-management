@@ -13,6 +13,11 @@
         *ngIf="isLoggedIn">
         My Tasks
       </a>
+      <a mat-list-item routerLink="admin/projects"
+        (click)="drawer.close()"
+        *ngIf="isLoggedIn">
+        All Projects
+      </a>
       <a mat-list-item routerLink="admin/create-project"
         (click)="drawer.close()"
         *ngIf="isLoggedIn">
@@ -22,14 +27,16 @@
   </mat-sidenav>
   <mat-sidenav-content>
     <mat-toolbar color="primary">
-      <button
-        type="button"
-        aria-label="Toggle sidenav"
-        mat-icon-button
-        (click)="drawer.toggle()">
-        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-      </button>
-      <span>Time Management</span>
+      <div class="app-name">
+        <button
+          type="button"
+          aria-label="Toggle sidenav"
+          mat-icon-button
+          (click)="drawer.toggle()">
+          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+        </button>
+        <span>Time Management</span>
+      </div>
 
       <div class="user" *ngIf="user">
         <img class="user-pic"
@@ -53,7 +60,8 @@
 
       <div *ngIf="!isLoggedIn" class="not-logged-in">
         <button class="m-1" mat-raised-button
-          routerLink="login">
+          routerLink="login"
+          style="margin-left: auto !important">
           LOG IN
         </button>
         <button class="m-1" mat-raised-button

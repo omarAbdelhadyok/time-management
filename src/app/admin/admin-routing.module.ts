@@ -6,6 +6,7 @@ import { CreateProjectComponent } from './create-project/create-project.componen
 import { loggedInGuard } from '../shared/services/guards/logged-guard.service';
 import { UserComponent } from './user/user.component';
 import { EditUserComponent } from './edit-user/edit-user.component';
+import { ProjectsComponent } from './projects/projects.component';
 
 const routes: Routes = [
     {
@@ -14,6 +15,7 @@ const routes: Routes = [
         children: [
             {path: '', redirectTo: 'tasks', pathMatch: 'full'},
             {path: 'tasks', canActivate: [loggedInGuard], component: TasksComponent},
+            {path: 'projects', canActivate: [loggedInGuard], component: ProjectsComponent},
             {path: 'create-project', canActivate: [loggedInGuard], component: CreateProjectComponent},
             {path: 'edit-project/:id', canActivate: [loggedInGuard], component: CreateProjectComponent},
             {path: 'profile', canActivate: [loggedInGuard], component: UserComponent},

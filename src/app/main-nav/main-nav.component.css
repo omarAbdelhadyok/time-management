@@ -14,15 +14,40 @@
   position: sticky;
   top: 0;
   z-index: 1;
+  flex-wrap: wrap;
+}
+
+@media(max-width: 768px) {
+  .mat-toolbar.mat-primary {
+    height: auto !important;
+  }
+}
+
+.app-name {
+  display: flex;
+  align-items: center;
+  width: 50%;
+}
+
+@media(max-width: 768px) {
+  .app-name {
+    width: 100%;
+  }
 }
 
 .user, .not-logged-in {
-  margin-left: auto;
   padding: 5px;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 50%;
+}
+
+@media(max-width: 768px) {
+  .user, .not-logged-in {
+    width: 100%;
+  }
 }
 
 .user-pic {
@@ -32,6 +57,7 @@
   border-radius: 50%;
   border: 1px solid #FFF;
   margin-right: 10px;
+  margin-left: auto;
 }
 
 .user-name:hover {
