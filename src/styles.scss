@@ -315,3 +315,17 @@ button:disabled {
   width: 15px;
   height: 15px;
 }
+
+//shared between multiple components
+.time-badge {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid #DDD;
+  border-radius: 2px;
+  padding: 4px;
+
+  small {
+      margin-left: 2px;
+  }
+}

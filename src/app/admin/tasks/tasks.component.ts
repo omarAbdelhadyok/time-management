@@ -7,6 +7,9 @@ import { ToastrService } from 'ngx-toastr';
 import { ObjectsOperationsService } from 'src/app/shared/services/local/object-operations.service';
 
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { Task } from 'src/app/shared/models/task.model';
+import { Status } from 'src/app/shared/models/status.model';
+import { statuses } from 'src/app/shared/services/local/task-statuses';
 
 @Component({
   selector: 'app-tasks',
@@ -42,6 +45,8 @@ export class TasksComponent implements OnInit {
   busyDeletingActiveTask: boolean = false;
   busySettingTaskComplete: boolean = false;
 
+  statuses: Status = statuses();
+
   panelOpenState: boolean = false;
 
   constructor(private projectsService: ProjectsService,
@@ -69,6 +74,7 @@ export class TasksComponent implements OnInit {
           this.projects.push({ id, ...data });
         })
         if(this.projects.length !== 0) {
+          this.projects = this.sortProjectsTasks(this.projects);
           this.noData = false;
         } else {
           //no data to display (data length === 0)
@@ -101,24 +107,24 @@ export class TasksComponent implements OnInit {
     this.selectedTaskInd = selection.value;
   }
 
-  //addong task to the active setting it in its project as current = true
+  //addong task to the active setting it in its project as status as current
   addTaskToActiveTasks() {
-    if(this.projects[this.selectedProjInd].tasks[this.selectedTaskInd].current == true)
+    if(this.projects[this.selectedProjInd].tasks[this.selectedTaskInd].status == this.statuses.completed)
       return this.toastr.error('This task is already completed, please select another one')
 
-    if(this.projects[this.selectedProjInd].tasks[this.selectedTaskInd].done == true)
+    if(this.projects[this.selectedProjInd].tasks[this.selectedTaskInd].status == this.statuses.current)
       return this.toastr.error('This task is already selected, please select another one')
 
     let selectedProject = this.projects[this.selectedProjInd],
         projectId = selectedProject.id,
         tasks = this.objectsOperationsService.copyArrayOfObjects(selectedProject.tasks);
     
-    tasks[this.selectedTaskInd].current = true;
+    tasks[this.selectedTaskInd].status = this.statuses.current;
     this.busyAddingActiveTask = true;
     try {
       this.projectsService.updateTasks(projectId, tasks)
       .then(res => {
-        this.projects[this.selectedProjInd].tasks[this.selectedTaskInd].current = true;
+        this.projects[this.selectedProjInd].tasks[this.selectedTaskInd].status = this.statuses.current;
         this.addTaskFrom.resetForm();
         this.selectedProjInd = undefined;
         this.selectedTaskInd = undefined;
@@ -141,13 +147,13 @@ export class TasksComponent implements OnInit {
     let project = this.projects[projectIndex],
         tasks = this.objectsOperationsService.copyArrayOfObjects(project.tasks);
 
-        tasks[taskIndex].current = false;
+        tasks[taskIndex].status = this.statuses.holding;
     try {
       this.busyDeletingActiveTask = true;
       this.projectsService.updateTasks(project.id, tasks)
       .then(res => {
         this.busyDeletingActiveTask = false;
-        project.tasks[taskIndex].current = false;
+        project.tasks[taskIndex].status = this.statuses.holding;
       })
       .catch(err => {
         this.toastr.error('Something went wrong, please try again');
@@ -169,8 +175,7 @@ export class TasksComponent implements OnInit {
     let project = this.projects[projectIndex],
         tasks = this.objectsOperationsService.copyArrayOfObjects(project.tasks);
 
-    tasks[taskIndex].current = false;
-    tasks[taskIndex].done = true;
+    tasks[taskIndex].status = this.statuses.completed;
 
     try {
       this.renderer.setStyle(loader, 'display', 'inline-block');
@@ -178,8 +183,8 @@ export class TasksComponent implements OnInit {
       this.projectsService.updateTasks(project.id, tasks)
       .then(res => {
         this.busySettingTaskComplete = false;
-        project.tasks[taskIndex].done = true;
-        project.tasks[taskIndex].current = false;
+        project.tasks[taskIndex].status = this.statuses.completed;
+        this.projects = this.sortProjectsTasks(this.projects);
         this.renderer.setStyle(loader, 'display', 'none');
       })
       .catch(err => {
@@ -198,7 +203,19 @@ export class TasksComponent implements OnInit {
   }
 
 
-
-  
+  sortProjectsTasks(projects: Project[]) {
+    projects.map(project => {
+      let arr: Task[] = [];
+      project.tasks.map(task => {
+        if(task.status == this.statuses.completed) {
+          arr.unshift(task);
+        } else {
+          arr.push(task);
+        }
+        project.tasks = arr;
+      })
+    })
+    return projects;
+  }
   
 }

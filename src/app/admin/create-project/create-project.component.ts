@@ -9,7 +9,9 @@ import { MatInput, MatSelect } from '@angular/material';
 import { Task } from 'src/app/shared/models/task.model';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { User } from 'src/app/shared/models/user.model';
-
+import { ObjectsOperationsService } from 'src/app/shared/services/local/object-operations.service';
+import { Status } from 'src/app/shared/models/status.model';
+import { statuses } from 'src/app/shared/services/local/task-statuses';
 @Component({
   selector: 'app-create-project',
   templateUrl: './create-project.component.html',
@@ -21,13 +23,17 @@ export class CreateProjectComponent implements OnInit {
 
   pageTitle: string = 'Add Project';
   project: Project = new Project();
+  projectBackUp: Project;
   user: User;
+  isEdit: boolean = false;
 
   projectId;
   busyCreating: boolean = false;
   busyLoading: boolean = false;
   busyDeleting: boolean = false;
   busyUpdating: boolean = false;
+
+  statuses: Status = statuses();
 
   projectStatus = [
     {name: 'Active', value: false},
@@ -38,7 +44,8 @@ export class CreateProjectComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private toastr: ToastrService,
-    private authService: AuthService
+    private authService: AuthService,
+    private objectOperationsService: ObjectsOperationsService
   ) {
     this.authService.user$.subscribe(res => this.user = res)
   }
@@ -48,6 +55,7 @@ export class CreateProjectComponent implements OnInit {
     if(this.projectId) {
       this.getProjectById();
       this.pageTitle = 'Edit Project';
+      this.isEdit = true;
     } else {
       this.reset();
       this.pageTitle = 'Add Project';
@@ -65,7 +73,8 @@ export class CreateProjectComponent implements OnInit {
       this.busyLoading = true;
       this.projectsService.getById(this.projectId).subscribe(res => {
         if(res) {
-          this.project = res;
+          this.project = this.objectOperationsService.copyObjectwithArrayofObjects(res);
+          this.projectBackUp = this.objectOperationsService.copyObjectwithArrayofObjects(res);    
         } else {
           this.router.navigate(['/admin']);
         }
@@ -91,8 +100,7 @@ export class CreateProjectComponent implements OnInit {
     if(parseInt(duration) > 1) unit = unit+'s';
     let newTask: Task = {
       task: task,
-      done: false,
-      current: false,
+      status: this.statuses.holding,
       id: uuidv1(),
       time: `${duration} ${unit}`
     }
@@ -124,6 +132,7 @@ export class CreateProjectComponent implements OnInit {
       let date = new Date();
       this.project.date = date.valueOf();
       this.project.uid = this.user.uid;
+      this.project.closed = false;
       let projectId = uuidv1();
       this.project.tasks.forEach(task => task.projectId = projectId);
       this.projectsService.create(projectId, this.project)
@@ -167,6 +176,15 @@ export class CreateProjectComponent implements OnInit {
       this.toastr.error(err.message);
       this.busyCreating = false;
     }
+  }
+
+  cancelEdit() {
+    this.project = this.objectOperationsService.copyObjectwithArrayofObjects(this.projectBackUp);
+  }
+
+  //experimntall -- should make a component to be able to select vides from the storage and get them on the list as tasks with names and durations -- popup ,, placed in the option of the card (the three dots)
+  add($event) {
+    console.log($event)
   }
 
 }

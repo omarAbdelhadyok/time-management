@@ -50,7 +50,9 @@
         </h2>
 
         <mat-menu #menu="matMenu">
-          <button mat-menu-item>Profile</button>
+          <button mat-menu-item routerLink="admin/profile">
+            Profile
+          </button>
           <button mat-menu-item (click)="logOut()">
             Log Out
           </button>

@@ -88,23 +88,73 @@
     <br>
     <mat-divider></mat-divider>
 
+    <!-- <mat-form-field class="mt-2">
+      <input matInput placeholder="Search tasks" name="search" [(ngModel)]="filteredStrings[projectCardI]">
+    </mat-form-field> -->
+
+    <!-- | filter:filteredStrings[projectCardI]:'task'-->
+
     <div class="project-tasks-list">
+
+      <mat-accordion>
+        <mat-expansion-panel class="project-list-item" *ngFor="let task of project.tasks; index as taskIndex">
+          <mat-expansion-panel-header>
+            <mat-panel-title class="project-task-text"
+              [ngClass]="{'completed-task': task.status == statuses.completed}">
+              {{task.task.length > 15 ? task.task.slice(0, 15)+'...' : task.task}}
+            </mat-panel-title>
+            <mat-panel-description>
+              <div class="time-badge" *ngIf="task.time && task.time != ' '">
+                <i class="icon-alarm"></i>
+                <small>
+                  {{task.time}}
+                </small>
+              </div>
+            </mat-panel-description>
+            <small class="active-badge" matTooltip="Active" *ngIf="task.status == statuses.current">
+              <i class="icon-clock"></i>
+            </small>
+            <small class="completed-badge" matTooltip="Completed" *ngIf="task.status == statuses.completed">
+              <i class="icon-checkmark"></i>
+            </small>
+            <small class="holding-badge" matTooltip="Holding" *ngIf="task.status == statuses.holding">
+              <i class="icon-calendar"></i>
+            </small>
+          </mat-expansion-panel-header>
+          <!--expanded panel content goes here-->
+          <p>
+            {{task.task}}
+          </p>
+          <div class="action-btns">
+            <button mat-button *ngIf="task.status == statuses.holding"
+              (click)="addTaskToActive(projectCardI, taskIndex, loader)">
+
+              <img src="./../../../assets/images/loader.svg"
+                #loader
+                alt="Loading ..."
+                title="Loading ..."
+                class="btn-loader add-to-active-loader"
+              />
+
+              Add to Active
+            </button>
+
+            <button mat-button color="warn" *ngIf="task.status != statuses.completed && task.status != statuses.cancelled"
+              (click)="cancelTask(projectCardI, taskIndex, loader)">
+
+              <img src="./../../../assets/images/loader.svg"
+                #loader
+                alt="Loading ..."
+                title="Loading ..."
+                class="btn-loader cancel-loader"
+              />
+
+              Cancel Task
+            </button>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
       
-      <div class="project-list-item" *ngFor="let task of project.tasks">
-        <p class="project-task-text"
-          [ngClass]="{'completed-task': task.done}">
-          {{task.task}}
-        </p>
-        <small class="active-badge" title="Active" *ngIf="task.current">
-          <i class="icon-clock"></i>
-        </small>
-        <small class="completed-badge" title="Completed" *ngIf="task.done">
-          <i class="icon-checkmark"></i>
-        </small>
-        <small class="holding-badge" title="Completed" *ngIf="!task.done && !task.current">
-          <i class="icon-calendar"></i>
-        </small>
-      </div>
 
     </div>
     

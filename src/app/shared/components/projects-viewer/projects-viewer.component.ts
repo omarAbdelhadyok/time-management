@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, Renderer2 } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, Renderer2, OnChanges } from '@angular/core';
 import { Project } from '../../models/project.model';
 import { ProjectsService } from '../../services/projects.service';
 import { ToastrService } from 'ngx-toastr';
@@ -7,13 +7,15 @@ import { ObjectsOperationsService } from '../../services/local/object-operations
 import { Task } from '../../models/task.model';
 import * as uuidv1 from 'uuid/v1.js';
 import { NgForm } from '@angular/forms';
+import { statuses } from '../../services/local/task-statuses';
+import { Status } from '../../models/status.model';
 
 @Component({
   selector: 'app-projects-viewer',
   templateUrl: './projects-viewer.component.html',
   styleUrls: ['./projects-viewer.component.scss']
 })
-export class ProjectsViewerComponent implements OnInit {
+export class ProjectsViewerComponent implements OnInit, OnChanges {
 
   @Input() projects: Project[];
   @Output() reset = new EventEmitter();
@@ -21,6 +23,12 @@ export class ProjectsViewerComponent implements OnInit {
 
   busyAddingNewProjectTask: boolean = false;
   busyClosingProject: boolean = false;
+  busyAddingActiveTask: boolean = false;
+
+  statuses: Status = statuses();
+
+  //broken because fo add to active functionality will be stopped as filter pipe return a new array of results
+  filteredStrings: string[] = [];
 
   constructor(private projectsService: ProjectsService,
     private toastr: ToastrService,
@@ -28,6 +36,14 @@ export class ProjectsViewerComponent implements OnInit {
     private renderer: Renderer2) { }
 
   ngOnInit() {
+  }
+
+  ngOnChanges() {
+    //create array of filteredStrings to be able to search in each porject tasks individually
+    //broken
+    // this.projects.forEach(project => {
+    //   this.filteredStrings.push('')
+    // });
   }
 
   //projects methods
@@ -44,10 +60,9 @@ export class ProjectsViewerComponent implements OnInit {
     if(parseInt(duration) > 1) unit = unit+'s';
     let newTask: Task = {
       task: task,
-      done: false,
-      current: false,
+      status: this.statuses.holding,
       id: uuidv1(),
-      time: `${duration} ${unit}`,
+      time: !duration && !unit ? '' : `${duration} ${unit}`,
       projectId: project.id
     }
     tasks.push(newTask)
@@ -95,6 +110,42 @@ export class ProjectsViewerComponent implements OnInit {
       this.toastr.error('Something went wrong, please try again');
       console.log(error);
       this.busyClosingProject = false;
+    }
+  }
+
+  //addong task to the active setting it in its project as current = true
+  addTaskToActive(projectCardI, taskIndex, loader) {
+    if(this.projects[projectCardI].tasks[taskIndex].status == this.statuses.completed)
+      return this.toastr.error('This task is already completed, please select another one')
+
+    if(this.projects[projectCardI].tasks[taskIndex].status == this.statuses.current)
+      return this.toastr.error('This task is already selected, please select another one')
+
+    let selectedProject = this.projects[projectCardI],
+        projectId = selectedProject.id,
+        tasks = this.objectsOperationsService.copyArrayOfObjects(selectedProject.tasks);
+    
+    tasks[taskIndex].status = this.statuses.current;
+    this.busyAddingActiveTask = true;
+    this.renderer.setStyle(loader, 'display', 'inline-block');
+    try {
+      this.projectsService.updateTasks(projectId, tasks)
+      .then(res => {
+        this.projects[projectCardI].tasks[taskIndex].status = this.statuses.current;
+        this.busyAddingActiveTask = false;
+        this.renderer.setStyle(loader, 'display', 'none');
+      })
+      .catch(err => {
+        console.log(err);
+        this.toastr.error('Something went wrong, please try again');
+        this.busyAddingActiveTask = false;
+        this.renderer.setStyle(loader, 'display', 'none');
+      })
+    } catch (error) {
+      console.log(error);
+      this.toastr.error('Something went wrong, please try again');
+      this.busyAddingActiveTask = false;
+      this.renderer.setStyle(loader, 'display', 'none');
     }
   }
 

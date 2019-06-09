@@ -1,8 +1,8 @@
 @import './../../../../assets/css/variables.scss';
 
 .project-card {
-    max-width: 360px;
-    margin: 0 5px;
+    width: 360px;
+    margin: 5px;
     position: relative;
 
     .icon-list-menu {
@@ -39,42 +39,51 @@
         margin-top: 10px;
         max-height: 300px;
         overflow: auto;
+        padding: 5px;
 
         .project-list-item {
-            border-radius: 5px;
-            font-size: 1rem;
-            padding: 5px;
-            margin: 5px 0;
-            display: flex;
-            align-items: center;
-            background-color: #EEE !important;
 
-            .project-task-text {
-                display: inline-block;
-                margin: 0;
-            }
-
-            .completed-badge {
-                background-color: $accent;
-            }
-
-            .active-badge {
-                background-color: $primary;
-            }
-
-            .holding-badge {
-                background-color: $third;
-            }
-
-            .active-badge, .completed-badge, .holding-badge {
-                margin-left: auto;
-                color: #FFF;
-                border-radius: 3px;
-                padding: 3px;
-                display: inline-flex;
+            mat-expansion-panel-header {
+                position: relative;
                 
-                .icon-clock, .icon-checkmark, .icon-calendar {
-                    font-size: 16px;
+                .project-task-text {
+                    display: inline-block;
+                    margin: 0;
+                    padding-left: 5px;
+                }
+    
+                .completed-badge {
+                    background-color: $accent;
+                }
+    
+                .active-badge {
+                    background-color: $primary;
+                }
+    
+                .holding-badge {
+                    background-color: $third;
+                }
+    
+                .active-badge, .completed-badge, .holding-badge {
+                    color: #FFF;
+                    border-radius: 3px;
+                    padding: 3px;
+                    display: inline-flex;
+                    position: absolute;
+                    left: 4px;
+                    
+                    .icon-clock, .icon-checkmark, .icon-calendar {
+                        font-size: 16px;
+                    }
+                }
+            }
+
+            .action-btns {
+                .add-to-active-loader {
+                    display: none;
+                }
+                .cancel-loader {
+                    display: none;
                 }
             }
         }

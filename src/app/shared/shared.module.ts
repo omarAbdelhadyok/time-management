@@ -5,9 +5,11 @@ import { ProjectsViewerComponent } from './components/projects-viewer/projects-v
 import { MaterialImportsModule } from './modules/material-imports.module';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { FilterPipe } from './pipes/filter.pipe';
 
 const components = [
-  ProjectsViewerComponent
+  ProjectsViewerComponent,
+  FilterPipe
 ]
 
 @NgModule({

@@ -12,7 +12,9 @@ import {
     MatCardModule,
     MatSelectModule,
     MatCheckboxModule,
-    MatRadioModule
+    MatRadioModule,
+    MatTooltipModule,
+    MatExpansionModule
 } from '@angular/material';
 
 const modules = [
@@ -28,7 +30,9 @@ const modules = [
     MatMenuModule,
     MatSelectModule,
     MatCheckboxModule,
-    MatRadioModule
+    MatRadioModule,
+    MatTooltipModule,
+    MatExpansionModule
 ]
 
 @NgModule({

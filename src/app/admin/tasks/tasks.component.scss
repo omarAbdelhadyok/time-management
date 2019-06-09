@@ -103,19 +103,6 @@
                                     display: inline-block;
                                     margin: 0;
                                 }
-    
-                                .time-badge {
-                                    margin-left: auto;
-                                    display: inline-flex;
-                                    align-items: center;
-                                    border: 1px solid #DDD;
-                                    border-radius: 2px;
-                                    padding: 4px;
-    
-                                    small {
-                                        margin-left: 2px;
-                                    }
-                                }
                             }
     
                             .complete-btn {
@@ -145,9 +132,22 @@
     app-projects-viewer {
         width: 100%;
         display: flex;
+        flex-wrap: wrap;
     }
 }
 
-.selected {
-    color: red !important;
+.task-search-bar-box {
+    width: 100%;
+    padding: 10px;
+
+    .task-search-bar {
+        width: 100%;
+        padding: 10px;
+        outline: none !important;
+        font-size: 16px;
+        border-radius: 5px;
+        color: #777;
+        border: 1px solid #DDD;
+    }
+    
 }

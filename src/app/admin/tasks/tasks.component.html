@@ -52,8 +52,8 @@
               </mat-option>
 
               <mat-option *ngFor="let task of projects[selectedProjInd]?.tasks; index as o" 
-                [value]="o" [disabled]="task.current || task.done">
-                  {{task.task}}
+                [value]="o" [disabled]="task.status != statuses.holding">
+                {{task.task}}
               </mat-option>
   
             </mat-select>
@@ -66,7 +66,7 @@
           <div class="add-task-btn">
             <!--add task to active tasks = mark current as true in the project.tasks[taskInd]-->
             <button mat-flat-button color="accent"
-              title="Add task to active"
+              matTooltip="Add task to active"
               [disabled]="addTaskFrom.invalid || busyAddingActiveTask"
               (click)="addTaskToActiveTasks()">
               
@@ -92,27 +92,28 @@
             <div class="tasks-holder" *ngFor="let project of projects; index as projectIndex">
               
               <div [@tasksEnter] class="active-task" *ngFor="let task of project.tasks; index as taskIndex"
-                [ngClass]="{'done': task.done}"
-                [style.display]="task.current? 'block': 'none'">
+                [ngClass]="{'done': task.status == statuses.completed}"
+                [style.display]="task.status == statuses.current ? 'block': 'none'">
   
                 <span class="active-task-line"
                   [ngClass]="{'deleting-task': busyDeletingActiveTask}">
   
                   <i class="icon-bin" [swal]="ConfirmDelete"
-                    title="Delete task from active"
+                    matTooltip="Delete task from active"
                     (confirm)="deleteTaskFromActiveTasks(projectIndex, taskIndex)"
                     (cancel)="handleCancelDeletingActiveTask($event)">
                   </i>
   
                   <div class="active-task-text">
-                    <p class="active-task-project-title" title="Project Title">
-                      {{project.title}}
+                    <p class="active-task-project-title" [matTooltip]="project.title">
+                      {{project.title.length > 10 ? project.title.slice(0, 10)+'...' : project.title}}
                     </p>
     
                     <p class="mat-body-1 active-task-task"
                       color="accent"
-                      labelPosition="before">
-                      {{task.task}}
+                      labelPosition="before"
+                      [matTooltip]="task.task">
+                      {{task.task.length > 35 ? task.task.slice(0, 35)+'...' : task.task}}
                     </p>
 
                     <div class="time-badge" *ngIf="task.time && task.time != ' '">
@@ -125,7 +126,7 @@
 
                   <div class="complete-btn">
                     <button mat-flat-button color="accent"
-                      title="Set task as completed"
+                      matTooltip="Set task as completed"
                       [disabled]="busySettingTaskComplete"
                       (click)="setTaskAsDone(projectIndex, taskIndex, loader)">
 
