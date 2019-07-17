@@ -12,11 +12,10 @@
         placeholder="Title"
         required
         maxlength="25"
-        minlength="5"
+        minlength="4"
         name="title"
         #title="ngModel"
         [(ngModel)]="project.title"
-        (click)="$event.target.select()"
       />
 
       <mat-error *ngIf="title.touched && title.errors?.required">
@@ -35,12 +34,11 @@
         matInput
         placeholder="Description"
         required
-        maxlength="50"
+        maxlength="60"
         minlength="5"
         name="description"
         #description="ngModel"
         [(ngModel)]="project.description"
-        (click)="$event.target.select()"
       />
 
       <mat-error *ngIf="description.touched && description.errors?.required">
@@ -62,12 +60,11 @@
           <input type="text"
             matInput
             placeholder="Task"
-            maxlength="50"
+            maxlength="200"
             minlength="5"
             name="task"
             #task="ngModel"
             ngModel
-            (click)="$event.target.select()"
           />
     
           <mat-error *ngIf="task.touched && task.errors?.minlength">
@@ -84,7 +81,6 @@
               name="duration"
               #duration="ngModel"
               ngModel
-              (click)="$event.target.select()"
             />
           </mat-form-field>
 
@@ -98,7 +94,8 @@
               <mat-option value="Minute">Minute</mat-option>
               <mat-option value="Hour">Hour</mat-option>
               <mat-option value="Day">Day</mat-option>
-              <mat-option value="Infinity">Infinity</mat-option>
+              <mat-option value="Month">Month</mat-option>
+              <mat-option value="Year">Year</mat-option>
 
             </mat-select>
           </mat-form-field>
@@ -167,6 +164,7 @@
       <button mat-raised-button
         class="m-1"
         color="warn"
+        *ngIf="isEdit"
         (click)="cancelEdit()">
         Cancel
       </button>

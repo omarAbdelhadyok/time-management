@@ -1,0 +1,80 @@
+<section class="row mt-5">
+  <h2 class="mat-h2">
+    {{pageTitle}}
+  </h2>
+
+  <form class="w-100" #noteForm="ngForm">
+    
+    <!--Note title-->
+    <mat-form-field>
+      <input type="text"
+        matInput
+        placeholder="Note"
+        required
+        maxlength="25"
+        minlength="5"
+        name="note"
+        #noteTxt="ngModel"
+        [(ngModel)]="note.note"
+      />
+
+      <mat-error *ngIf="noteTxt.touched && noteTxt.errors?.required">
+        Note is required
+      </mat-error>
+
+      <mat-error *ngIf="noteTxt.touched && noteTxt.errors?.minlength">
+        Note must be at least 5 charachters
+      </mat-error>
+      
+    </mat-form-field>
+
+    <mat-form-field>
+      <input type="text"
+        matInput
+        placeholder="Background Color"
+        required
+        maxlength="20"
+        minlength="3"
+        name="bgColor"
+        #color="ngModel"
+        [(ngModel)]="note.bgColor"
+      />
+
+      <mat-error *ngIf="color.touched && color.errors?.required">
+        Color is required
+      </mat-error>
+
+      <mat-error *ngIf="color.touched && color.errors?.minlength">
+        Color must be at least 3 charachters
+      </mat-error>
+      
+    </mat-form-field>
+
+    <div class="mt-3 text-center">
+      <button mat-raised-button
+        class="m-1"
+        color="primary"
+        [disabled]="noteForm.invalid || busyCreating"
+        (click)="onSave()">
+
+        <img *ngIf="busyCreating"
+          src="./../../../assets/images/loader.svg"
+          alt="Loading ..."
+          title="Loading ..."
+          class="btn-loader"
+        />
+        
+        Save
+      </button>
+
+      <button mat-raised-button
+        class="m-1"
+        color="warn"
+        (click)="onCancelClick()">
+        Cancel
+      </button>
+    </div>
+
+  </form>
+
+</section>

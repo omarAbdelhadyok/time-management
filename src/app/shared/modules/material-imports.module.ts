@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { LayoutModule } from '@angular/cdk/layout';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 import { 
     MatToolbarModule,
     MatButtonModule,
@@ -14,7 +15,8 @@ import {
     MatCheckboxModule,
     MatRadioModule,
     MatTooltipModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatDialogModule
 } from '@angular/material';
 
 const modules = [
@@ -32,7 +34,9 @@ const modules = [
     MatCheckboxModule,
     MatRadioModule,
     MatTooltipModule,
-    MatExpansionModule
+    MatExpansionModule,
+    DragDropModule,
+    MatDialogModule
 ]
 
 @NgModule({

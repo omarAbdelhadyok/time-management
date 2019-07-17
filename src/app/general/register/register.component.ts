@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from 'src/app/shared/models/user.model';
-import { AuthService } from 'src/app/shared/services/auth.service';
-import { PhotosService } from 'src/app/shared/services/photos.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { PhotosService, AuthService } from 'src/app/shared/services';
+import { User } from 'src/app/shared/models';
 
 @Component({
   selector: 'app-register',
@@ -75,11 +74,11 @@ export class RegisterComponent implements OnInit {
         this.busylogging = false;
       }).catch(error => {
         this.busylogging = false;
-        console.log(error);
+        this.toastr.error(error, 'Something Went Wrong');
       });
     } catch (error) {
       this.busylogging = false;
-      console.log(error);
+      this.toastr.error(error, 'Something Went Wrong');      
     }
   }
 

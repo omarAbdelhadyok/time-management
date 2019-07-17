@@ -28,7 +28,7 @@
                 No projects yet, please add some
               </mat-option>
 
-              <mat-option *ngFor="let project of projects; index as i" [value]="i">
+              <mat-option *ngFor="let project of projects; index as i" [value]="i" [matTooltip]="project.title">
                 {{project.title}}
               </mat-option>
 
@@ -52,7 +52,8 @@
               </mat-option>
 
               <mat-option *ngFor="let task of projects[selectedProjInd]?.tasks; index as o" 
-                [value]="o" [disabled]="task.status != statuses.holding">
+                [value]="o" [disabled]="task.status != statuses.holding"
+                [matTooltip]="task.task">
                 {{task.task}}
               </mat-option>
   

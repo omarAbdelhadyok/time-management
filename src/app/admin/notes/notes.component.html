@@ -1,0 +1,73 @@
+<app-notes-header></app-notes-header>
+
+<section class="row mt-5">
+  <div class="notes">
+    <div class="notes-heading">
+      <h2 class="mat-h2">
+        Notes
+      </h2>
+      <div class="add-note">
+        <button class="ml-2" mat-stroked-button color="primary" 
+          routerLink="/admin/favorite-colors">
+          Favorite Colors
+        </button>
+        <button class="add-note-btn" mat-stroked-button color="primary" 
+          (click)="openDialog()">
+          Add Note
+        </button>
+      </div>
+    </div>
+
+    <div class="all-notes" *ngIf="notes.length != 0">
+      <div class="note-box" cdkDrag *ngFor="let note of notes; index as i" #noteRef
+        [style.background]="note.bgColor"
+        [style.color]="note.txtColor">
+
+        <i class="icon-list-menu"
+          [matMenuTriggerFor]="menu">
+        </i>
+
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item
+            (click)="openDialog(i)">
+            <i class="icon-cog"></i>
+            Edit Note
+          </button>
+          <button mat-menu-item
+            [disabled]="busyDeleting"
+            (click)="deleteNote(note.id, index)">
+            <i class="icon-lock"></i>
+            Delete Note
+          </button>
+        </mat-menu>
+
+        {{note.note}}
+        <div class="color-stack" *ngIf="favColors">
+
+          <div class="color color1" *ngFor="let color of favColors?.colors"
+            [style.background]="color"
+            (click)="changeNoteBackground(noteRef, color, i)">
+          </div>
+
+          <div class="color-txt"
+            (click)="copyColor()">
+            {{selectedFavColors[i]}}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center mt-3" *ngIf="notes.length == 0 && noData == false">
+      <img src="./../../../assets/images/loader.svg"
+        class="loader"
+        alt="Loading ..."
+        title="Loading ..."
+      />
+    </div>
+    
+    <div class="text-center mt-3" *ngIf="notes.length == 0 && noData == true">
+      <p>{{displayedMsg}}</p>
+    </div>
+
+  </div>
+</section>

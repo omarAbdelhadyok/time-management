@@ -1,0 +1,103 @@
+<div class="todo-box">
+  <h2>To do</h2>
+
+  <div
+    cdkDropList
+    #todoList="cdkDropList"
+    [cdkDropListData]="todos"
+    [cdkDropListConnectedTo]="[doneList]"
+    class="todo-list"
+    (cdkDropListDropped)="drop($event)">
+
+    <form class="new-todo-box" #todoForm="ngForm">
+      <mat-form-field class="new-todo">
+        <input type="text" matInput
+          placeholder="Add New Todo"
+          name="todoItem"
+          required
+          #TodoItem="ngModel"
+          [(ngModel)]="todo"
+        />
+
+        <mat-error *ngIf="TodoItem.invalid">
+          Todo is required
+        </mat-error>
+      </mat-form-field>
+      <div class="button-box">
+        <button mat-flat-button color="primary"
+          [disabled]="todoForm.invalid"
+          (click)="createTodo()">
+
+          ADD
+        </button>
+      </div>
+    </form>
+
+    <div class="todo-item" *ngFor="let todo of todos" cdkDrag>{{todo}}</div>
+
+    <div class="text-center mt-3" *ngIf="todos.length == 0 && noTodos == false">
+      <img src="./../../../assets/images/loader.svg"
+        class="loader"
+        alt="Loading ..."
+        title="Loading ..."
+      />
+    </div>
+    
+    <div class="text-center mt-3" *ngIf="todos.length == 0 && noTodos == true">
+      <p>{{displayedMsg}}</p>
+    </div>
+  </div>
+</div>
+
+<div class="todo-box">
+  <h2>Done</h2>
+
+  <div
+    cdkDropList
+    #doneList="cdkDropList"
+    [cdkDropListData]="doneTodos"
+    [cdkDropListConnectedTo]="[todoList]"
+    class="todo-list"
+    (cdkDropListDropped)="drop($event)">
+    <div class="todo-item item-center">
+      <button mat-raised-button (click)="clearDoneList()">Clear done list</button>
+    </div>
+    <div class="todo-item" *ngFor="let item of doneTodos" cdkDrag>{{item}}</div>
+
+    <div class="text-center mt-3" *ngIf="doneTodos.length == 0 && noDoneTodos == false">
+      <img src="./../../../assets/images/loader.svg"
+        class="loader"
+        alt="Loading ..."
+        title="Loading ..."
+      />
+    </div>
+    
+    <div class="text-center mt-3" *ngIf="doneTodos.length == 0 && noDoneTodos == true">
+      <p>{{displayedDoneMsg}}</p>
+    </div>
+
+  </div>
+</div>
+
+<div class="text-center">
+  <button mat-raised-button color="primary" 
+    class="m-1"
+    [disabled]="!allowSaveBtn || busyCreating"
+    (click)="saveActiveAndDoneTodos()">
+
+    <img *ngIf="busyCreating"
+      src="./../../../assets/images/loader.svg"
+      alt="Loading ..."
+      title="Loading ..."
+      class="btn-loader"
+    />
+
+    Save
+  </button>
+
+  <button mat-raised-button color="warn"
+    class="m-1"
+    (click)="cancel()">
+    Cancel
+  </button>
+</div>

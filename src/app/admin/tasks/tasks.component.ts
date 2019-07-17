@@ -110,10 +110,13 @@ export class TasksComponent implements OnInit {
   //addong task to the active setting it in its project as status as current
   addTaskToActiveTasks() {
     if(this.projects[this.selectedProjInd].tasks[this.selectedTaskInd].status == this.statuses.completed)
-      return this.toastr.error('This task is already completed, please select another one')
+      return this.toastr.error('This task is completed, please select another one');
 
     if(this.projects[this.selectedProjInd].tasks[this.selectedTaskInd].status == this.statuses.current)
-      return this.toastr.error('This task is already selected, please select another one')
+      return this.toastr.error('This task is already selected, please select another one');
+
+    if(this.projects[this.selectedProjInd].tasks[this.selectedTaskInd].status == this.statuses.cancelled)
+      return this.toastr.error('This task is cancelled, please select another one');
 
     let selectedProject = this.projects[this.selectedProjInd],
         projectId = selectedProject.id,

@@ -1,0 +1,150 @@
+<app-notes-header></app-notes-header>
+
+<section class="row mt-5">
+  <div class="w-100">
+    <h2 class="mat-h2">
+      Favorite Colors
+    </h2>
+
+    <form #colorsFrom="ngForm">
+      <p *ngIf="busyLoading">Loading, Please wait ...</p>
+      <mat-form-field class="mt-2">
+        <input type="text"
+          matInput
+          placeholder="Favorite Color 1"
+          maxlength="20"
+          minlength="3"
+          name="note-1"
+          #favColor1="ngModel"
+          [(ngModel)]="favColors?.colors[0]"
+        />
+  
+        <mat-error *ngIf="favColor1.touched && favColor1.errors?.minlength">
+          Color must be at least 3 charachters
+        </mat-error>
+          
+      </mat-form-field>
+
+      <mat-form-field class="mt-2">
+        <input type="text"
+          matInput
+          placeholder="Favorite Color 2"
+          maxlength="20"
+          minlength="3"
+          name="note-2"
+          #favColor2="ngModel"
+          [(ngModel)]="favColors?.colors[1]"
+        />
+  
+        <mat-error *ngIf="favColor2.touched && favColor2.errors?.minlength">
+          Color must be at least 3 charachters
+        </mat-error>
+          
+      </mat-form-field>
+
+      <mat-form-field class="mt-2">
+        <input type="text"
+          matInput
+          placeholder="Favorite Color 3"
+          maxlength="20"
+          minlength="3"
+          name="note-3"
+          #favColor3="ngModel"
+          [(ngModel)]="favColors?.colors[2]"
+        />
+  
+        <mat-error *ngIf="favColor3.touched && favColor3.errors?.minlength">
+          Color must be at least 3 charachters
+        </mat-error>
+          
+      </mat-form-field>
+
+      <mat-form-field class="mt-2">
+        <input type="text"
+          matInput
+          placeholder="Favorite Color 4"
+          maxlength="20"
+          minlength="3"
+          name="note-4"
+          #favColor4="ngModel"
+          [(ngModel)]="favColors?.colors[3]"
+        />
+  
+        <mat-error *ngIf="favColor4.touched && favColor4.errors?.minlength">
+          Color must be at least 3 charachters
+        </mat-error>
+          
+      </mat-form-field>
+
+      <mat-form-field class="mt-2">
+        <input type="text"
+          matInput
+          placeholder="Favorite Color 5"
+          maxlength="20"
+          minlength="3"
+          name="note-5"
+          #favColor5="ngModel"
+          [(ngModel)]="favColors?.colors[4]"
+        />
+  
+        <mat-error *ngIf="favColor5.touched && favColor5.errors?.minlength">
+          Color must be at least 3 charachters
+        </mat-error>
+          
+      </mat-form-field>
+
+      <mat-form-field class="mt-2">
+        <input type="text"
+          matInput
+          placeholder="Favorite Color 6"
+          maxlength="20"
+          minlength="3"
+          name="note-6"
+          #favColor6="ngModel"
+          [(ngModel)]="favColors?.colors[5]"
+        />
+  
+        <mat-error *ngIf="favColor6.touched && favColor6.errors?.minlength">
+          Color must be at least 3 charachters
+        </mat-error>
+          
+      </mat-form-field>
+
+      <mat-form-field class="mt-2">
+        <input type="text"
+          matInput
+          placeholder="Favorite Color 7"
+          maxlength="20"
+          minlength="3"
+          name="note-7"
+          #favColor7="ngModel"
+          [(ngModel)]="favColors?.colors[6]"
+        />
+  
+        <mat-error *ngIf="favColor7.touched && favColor7.errors?.minlength">
+          Color must be at least 3 charachters
+        </mat-error>
+          
+      </mat-form-field>
+
+      <div class="mt-3 text-center">
+        <button mat-raised-button
+          class="m-1"
+          color="primary"
+          [disabled]="colorsFrom.invalid || busySaving"
+          (click)="updateColors()">
+  
+          <img *ngIf="busySaving"
+            src="./../../../assets/images/loader.svg"
+            alt="Loading ..."
+            title="Loading ..."
+            class="btn-loader"
+          />
+          
+          Save
+        </button>
+      </div>
+    </form>
+
+  </div>
+</section>

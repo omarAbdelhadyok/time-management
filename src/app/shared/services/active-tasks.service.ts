@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
 import { AngularFirestore, DocumentReference } from '@angular/fire/firestore';
-import { ActiveTask } from '../models/active-task.model';
-import * as firebase from 'firebase';
+import { ActiveTask } from '../models';
 
 @Injectable({
     providedIn: 'root'

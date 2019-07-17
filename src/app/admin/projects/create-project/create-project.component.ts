@@ -1,28 +1,26 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ProjectsService } from 'src/app/shared/services/projects.service';
-import { Project } from 'src/app/shared/models/project.model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { NgForm } from '@angular/forms';
 import * as uuidv1 from 'uuid/v1.js';
-import { MatInput, MatSelect } from '@angular/material';
-import { Task } from 'src/app/shared/models/task.model';
-import { AuthService } from 'src/app/shared/services/auth.service';
-import { User } from 'src/app/shared/models/user.model';
-import { ObjectsOperationsService } from 'src/app/shared/services/local/object-operations.service';
-import { Status } from 'src/app/shared/models/status.model';
+import { MatInput, MatSelect, MatDialog } from '@angular/material';
+import { ObjectsOperationsService, AuthService } from 'src/app/shared/services';
 import { statuses } from 'src/app/shared/services/local/task-statuses';
+import { CanComponentDeactivate, Status, User, Task, Project } from 'src/app/shared/models';
+import { ConfirmDeactivateComponent } from '../../../shared/components';
+
 @Component({
   selector: 'app-create-project',
   templateUrl: './create-project.component.html',
   styleUrls: ['./create-project.component.scss']
 })
-export class CreateProjectComponent implements OnInit {
+export class CreateProjectComponent implements OnInit, CanComponentDeactivate {
 
   @ViewChild('projectForm') projectForm: NgForm;
 
   pageTitle: string = 'Add Project';
-  project: Project = new Project();
+  project: Project;
   projectBackUp: Project;
   user: User;
   isEdit: boolean = false;
@@ -35,6 +33,7 @@ export class CreateProjectComponent implements OnInit {
 
   statuses: Status = statuses();
 
+  //for dropdown to chose when isEdit
   projectStatus = [
     {name: 'Active', value: false},
     {name: 'Closed', value: true},
@@ -45,7 +44,8 @@ export class CreateProjectComponent implements OnInit {
     private route: ActivatedRoute,
     private toastr: ToastrService,
     private authService: AuthService,
-    private objectOperationsService: ObjectsOperationsService
+    private objectOperationsService: ObjectsOperationsService,
+    private dialog: MatDialog
   ) {
     this.authService.user$.subscribe(res => this.user = res)
   }
@@ -62,12 +62,30 @@ export class CreateProjectComponent implements OnInit {
     }
   }
 
+  //confirm method for canDeactivate
+  async confirm() {
+    if(!this.objectOperationsService.areEqualObjects(this.project, this.projectBackUp)) {
+      const result = await this.openDialog();
+      return result
+    }
+    return true;
+  }
+
+  openDialog() {
+    const dialogRef = this.dialog.open(ConfirmDeactivateComponent, {
+      width: '60%'
+    });
+
+    return dialogRef.afterClosed().toPromise();
+  }
+
   reset() {
     this.projectForm.resetForm();
     this.project = new Project();
+    this.projectBackUp = new Project();
   }
 
-  //get article by id
+  //get project by id
   getProjectById() {
     try {
       this.busyLoading = true;
@@ -102,7 +120,8 @@ export class CreateProjectComponent implements OnInit {
       task: task,
       status: this.statuses.holding,
       id: uuidv1(),
-      time: `${duration} ${unit}`
+      duration,
+      unit
     }
     this.project.tasks.push(newTask)
   }

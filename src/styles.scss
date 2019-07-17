@@ -34,7 +34,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
-@import '~@angular/material/theming';
 // Plus imports for other components in your app.
 
 @import './assets/css/variables.scss';
@@ -109,11 +108,12 @@ body { margin: 0; font-family: 'Roboto Slab', serif; }
 }
 
 .item-center {
-  justify-content: center;
+  justify-content: center !important;
 }
 
 //margins && paddings
 //margin
+.m-0 {margin: 0 !important;}
 .m-1 {margin: 5px !important;}
 .m-2 {margin: 10px !important;}
 .m-3 {margin: 15px !important;}
@@ -128,6 +128,7 @@ body { margin: 0; font-family: 'Roboto Slab', serif; }
 .mt-5 {margin-top: 25px !important;}
 
 //padding
+.p-0 {padding: 0 !important;}
 .p-1 {padding: 5px !important;}
 .p-2 {padding: 10px !important;}
 .p-3 {padding: 15px !important;}
@@ -181,6 +182,7 @@ mat-form-field {
   }
 }
 
+//file upload input
 .custom-file-upload {
   border: 1px solid #ccc;
   display: inline-block;
@@ -197,6 +199,7 @@ mat-form-field {
   display: none;
 }
 
+//breathing button
 .app-button  {
   outline: none;
   border: none;
@@ -238,7 +241,7 @@ button:disabled {
   cursor: not-allowed;
 }
 
-
+//app card
 .card {
   width: 320px;
   position: relative;
@@ -283,25 +286,6 @@ button:disabled {
   }
 }
 
-//animations
-@keyframes breathing {
-  0% {
-    box-shadow: 0 0 0 0 rgba(144, 164, 174, 0.7), 0 0 0 0 rgba(144, 164, 174, 0.7);
-  }
-
-  40% {
-    box-shadow: 0 0 0 50px rgba(144, 164, 174, 0), 0 0 0 0 rgba(144, 164, 174, 0.7);
-  }
-
-  80% {
-    box-shadow: 0 0 0 50px rgba(144, 164, 174, 0), 0 0 0 30px rgba(144, 164, 174, 0);
-  }
-
-  100% {
-    box-shadow: 0 0 0 0 rgba(144, 164, 174, 0), 0 0 0 30px rgba(144, 164, 174, 0);
-  }
-}
-
 .loader {
   width: 60px;
   height: 60px;
@@ -327,5 +311,24 @@ button:disabled {
 
   small {
       margin-left: 2px;
+  }
+}
+
+//animations
+@keyframes breathing {
+  0% {
+    box-shadow: 0 0 0 0 rgba(144, 164, 174, 0.7), 0 0 0 0 rgba(144, 164, 174, 0.7);
+  }
+
+  40% {
+    box-shadow: 0 0 0 50px rgba(144, 164, 174, 0), 0 0 0 0 rgba(144, 164, 174, 0.7);
+  }
+
+  80% {
+    box-shadow: 0 0 0 50px rgba(144, 164, 174, 0), 0 0 0 30px rgba(144, 164, 174, 0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(144, 164, 174, 0), 0 0 0 30px rgba(144, 164, 174, 0);
   }
 }

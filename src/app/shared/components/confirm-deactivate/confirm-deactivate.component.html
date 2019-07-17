@@ -1,0 +1,20 @@
+<section class="row mt-5">
+  <div class="warning-title-box">
+    <img src="./../../../../assets/images/warning.svg"
+      class="warning-img"
+      alt="Warning"
+      title="Are You Sure?"
+    />
+    <h2 class="warning-title">Are You Sure?</h2>
+  </div>
+  <p class="w-100 m-0">There are unsaved changes, are you sure you want to discard them?</p>
+
+  <div class="w-100 text-center mt-5">
+    <button class="m-1" mat-raised-button color="primary" (click)="discardChanges()">
+      Discard
+    </button>
+    <button class="m-1" mat-raised-button color="warn" (click)="cancelDeactivate()">
+      Cancel
+    </button>
+  </div>
+</section>

@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { AuthService } from '../shared/services/auth.service';
-import { User } from '../shared/models/user.model';
+import { AuthService } from '../shared/services';
+import { User } from '../shared/models';
 
 @Component({
   selector: 'app-main-nav',

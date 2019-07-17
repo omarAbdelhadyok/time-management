@@ -34,12 +34,18 @@
           #newTask="ngModel"
           ngModel
           required
-          (click)="$event.target.select()"
+          minlength="5"
+          maxlength="200"
         />
         <!--complete the add task to project method -->
         <mat-error *ngIf="newTask.touched && newTask.errors?.required">
           Task is required
         </mat-error>
+
+        <mat-error *ngIf="newTask.touched && newTask.errors?.minlength">
+          Task must be at least 5 charachters
+        </mat-error>
+
       </mat-form-field>
 
       <mat-form-field class="mt-2 new-task-duration">
@@ -49,7 +55,6 @@
           name="duration"
           #duration="ngModel"
           ngModel
-          (click)="$event.target.select()"
         />
       </mat-form-field>
 
@@ -63,7 +68,8 @@
           <mat-option value="Minute">Minute</mat-option>
           <mat-option value="Hour">Hour</mat-option>
           <mat-option value="Day">Day</mat-option>
-          <mat-option value="Infinity">Infinity</mat-option>
+          <mat-option value="Month">Month</mat-option>
+          <mat-option value="Year">Year</mat-option>
 
         </mat-select>
       </mat-form-field>
@@ -88,26 +94,21 @@
     <br>
     <mat-divider></mat-divider>
 
-    <!-- <mat-form-field class="mt-2">
-      <input matInput placeholder="Search tasks" name="search" [(ngModel)]="filteredStrings[projectCardI]">
-    </mat-form-field> -->
-
-    <!-- | filter:filteredStrings[projectCardI]:'task'-->
-
     <div class="project-tasks-list">
 
       <mat-accordion>
-        <mat-expansion-panel class="project-list-item" *ngFor="let task of project.tasks; index as taskIndex">
+        <mat-expansion-panel class="project-list-item" *ngFor="let task of project.tasks; index as taskIndex"
+          [matTooltip]="task.task">
           <mat-expansion-panel-header>
             <mat-panel-title class="project-task-text"
               [ngClass]="{'completed-task': task.status == statuses.completed}">
               {{task.task.length > 15 ? task.task.slice(0, 15)+'...' : task.task}}
             </mat-panel-title>
             <mat-panel-description>
-              <div class="time-badge" *ngIf="task.time && task.time != ' '">
+              <div class="time-badge" *ngIf="task.duration && task.unit">
                 <i class="icon-alarm"></i>
                 <small>
-                  {{task.time}}
+                  {{task.duration}} {{task.unit}}
                 </small>
               </div>
             </mat-panel-description>
@@ -120,6 +121,9 @@
             <small class="holding-badge" matTooltip="Holding" *ngIf="task.status == statuses.holding">
               <i class="icon-calendar"></i>
             </small>
+            <small class="cancelled-badge" matTooltip="Cancelled" *ngIf="task.status == statuses.cancelled">
+              <i class="icon-cancel-circle"></i>
+            </small>
           </mat-expansion-panel-header>
           <!--expanded panel content goes here-->
           <p>
@@ -127,6 +131,7 @@
           </p>
           <div class="action-btns">
             <button mat-button *ngIf="task.status == statuses.holding"
+              title="Add To Active"
               (click)="addTaskToActive(projectCardI, taskIndex, loader)">
 
               <img src="./../../../assets/images/loader.svg"
@@ -136,7 +141,13 @@
                 class="btn-loader add-to-active-loader"
               />
 
-              Add to Active
+              <i class="icon-plus"></i>
+            </button>
+
+            <button mat-button color="accent" *ngIf="task.status == statuses.holding"
+              (click)="editTask(taskIndex, projectCardI)">
+
+              <i class="icon-cog"></i>
             </button>
 
             <button mat-button color="warn" *ngIf="task.status != statuses.completed && task.status != statuses.cancelled"
@@ -149,7 +160,7 @@
                 class="btn-loader cancel-loader"
               />
 
-              Cancel Task
+              <i class="icon-cross"></i>
             </button>
           </div>
         </mat-expansion-panel>

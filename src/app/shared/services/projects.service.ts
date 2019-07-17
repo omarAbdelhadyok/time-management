@@ -1,7 +1,8 @@
 import { Injectable } from "@angular/core";
 import { AngularFirestore, DocumentReference } from '@angular/fire/firestore';
 import { Project } from '../models/project.model';
-import { User } from '../models/user.model';
+import { firestore } from 'firebase/app';
+import { User } from '../models';
 
 @Injectable({
     providedIn: 'root'
@@ -43,6 +44,12 @@ export class ProjectsService {
         let docRef = this.db.collection(`projects`).doc(id).ref as DocumentReference;
         batch.update(docRef, {tasks: tasks});
         return batch.commit();
+    }
+
+    addNewTask(id, task) {
+        return this.db.collection(`projects`).doc(id).update({
+            tasks: firestore.FieldValue.arrayUnion(task)
+        })
     }
 
     toggleProject(id: string, status: boolean) {

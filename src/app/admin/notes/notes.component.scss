@@ -1,0 +1,105 @@
+.notes {
+    width: 100%;
+    
+    .notes-heading {
+        display: flex;
+        width: 100%;
+
+        .add-note {
+            margin-left: auto;
+
+            .add-note-btn {
+                margin-left: 5px;
+            }
+        }
+    }
+
+    .all-notes {
+        display: flex;
+        flex-wrap: wrap;
+
+        .note-box {
+            width: 200px;
+            height: 200px;
+            margin: 15px;
+            border: solid 1px #ccc;
+            color: rgba(0, 0, 0, 0.87);
+            cursor: move;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: #fff;
+            border-radius: 4px;
+            position: relative;
+            z-index: 1;
+            transition: box-shadow 200ms cubic-bezier(0, 0, 0.2, 1);
+            box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2),
+                        0 2px 2px 0 rgba(0, 0, 0, 0.14),
+                        0 1px 5px 0 rgba(0, 0, 0, 0.12);
+        
+            &:active {
+                box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+                            0 8px 10px 1px rgba(0, 0, 0, 0.14),
+                            0 3px 14px 2px rgba(0, 0, 0, 0.12);
+            }
+
+            .icon-list-menu {
+                position: absolute;
+                right: 8px;
+                top: 8px;
+
+                &:hover {
+                    opacity: 0.5;
+                    cursor: pointer;
+                }
+            }
+
+            .color-stack {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                height: 25px;
+                width: 100%;
+                display: flex;
+                align-items: center;
+                background-color: #DDD;
+
+
+                &:hover {
+                    cursor: pointer;
+                }
+
+                .color {
+                    width: 10px;
+                    height: 10px;
+                    border-radius: 50%;
+                    margin: 3px;
+                    transition: all 0.2s ease-in-out;
+
+                    &:hover {
+                        cursor: pointer;
+                        transform: scale(1.5);
+                    }
+                }
+
+                .color1 {background-color: #E91E63;}
+                .color2 {background-color: #3F51B5;}
+                .color3 {background-color: #009688;}
+                .color4 {background-color: #795548;}
+                .color5 {background-color: #607D8B;}
+
+                .color-txt {
+                    margin-left: auto;
+                    padding: 5px;
+                    color: #333;
+
+                    &:hover {
+                        opacity: 0.5;
+                    }
+                }
+            }
+        }
+    }
+
+}

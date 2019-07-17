@@ -23,6 +23,16 @@
         *ngIf="isLoggedIn">
         Create Project
       </a>
+      <a mat-list-item routerLink="admin/notes"
+        (click)="drawer.close()"
+        *ngIf="isLoggedIn">
+        Notes
+      </a>
+      <a mat-list-item routerLink="admin/todo-list"
+        (click)="drawer.close()"
+        *ngIf="isLoggedIn">
+        Todo List
+      </a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
@@ -35,7 +45,7 @@
           (click)="drawer.toggle()">
           <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
         </button>
-        <span>Time Management</span>
+        <span>Time Set</span>
       </div>
 
       <div class="user" *ngIf="user">
