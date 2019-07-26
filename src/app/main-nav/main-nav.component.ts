@@ -23,6 +23,7 @@ export class MainNavComponent {
   constructor(private breakpointObserver: BreakpointObserver,
     public authService: AuthService) {
 
+    //check logged in user
     this.authService.user$.subscribe(res => {
       if(res) {
         this.isLoggedIn = true;

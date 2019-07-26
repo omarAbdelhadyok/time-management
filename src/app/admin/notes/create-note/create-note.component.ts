@@ -1,8 +1,7 @@
-import { Component, OnInit, ViewChild, Input, Inject } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { Note } from 'src/app/shared/models/note.model';
 import { NgForm } from '@angular/forms';
 import tinycolor from "tinycolor2";
-import { Router } from '@angular/router';
 import { NotesService } from 'src/app/shared/services/notes.service';
 import { ToastrService } from 'ngx-toastr';
 import * as uuidv1 from 'uuid/v1.js';
@@ -27,16 +26,14 @@ export class CreateNoteComponent implements OnInit {
   busyCreating: boolean = false;
 
   constructor(private notesService: NotesService,
-    private router: Router,
     private toastr: ToastrService,
     private authService: AuthService,
     public dialogRef: MatDialogRef<CreateNoteComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) {
-      this.authService.user$.subscribe(res => this.user = res);
-      this.note = data.note;
-    }
+    @Inject(MAT_DIALOG_DATA) public data: any) {}
 
   ngOnInit() {
+    this.authService.user$.subscribe(res => this.user = res);
+    this.note = this.data.note;
     if(this.note) {
       this.pageTitle = 'Edit Note';
       this.isEdit = true;
